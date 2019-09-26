@@ -16,8 +16,8 @@ library(xtable)
 # Export the dataframe to a latex table
 
 df <- data.frame(ID=c(1:30))
-treatmentOrder <- c("1st","2sd")
+treatmentOrder <- c("1st","2nd")
 df$treatment1 <- as.factor(sample(treatmentOrder, nrow(df), TRUE))
-df$treatment2 <- as.factor(ifelse(df$treatment1 == "1st", "2sd", "1st"))
+df$treatment2 <- as.factor(ifelse(df$treatment1 == "1st", "2nd", "1st"))
 
 print(xtable(df, caption = "Paired Comparison Design.", label="tab:execution:experiment-design"), include.rownames=FALSE)
