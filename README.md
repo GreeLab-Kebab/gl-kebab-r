@@ -9,6 +9,7 @@ This repository is part of the project ``An Empirical Analysis of JavaScript Dea
 - [ ] Write Prerequisites.
 - [ ] Write instalation process.
 - [ ] Write execution process.
+- [ ] Organize output zips in subject/optimization-level?
 
 
 ## Getting Started
