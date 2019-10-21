@@ -8,6 +8,7 @@ INDEX_ENERGY = 3
 INDEX_OPT_LEVEL = 4
 
 PATH_PLOT_BOXPLOT = "plots/boxplots/"
+PATH_PLOT_HISTOGRAM = "plots/histograms/"
 
 subjects <- c("myoutubecom", "amazoncom", "linkedincom", "baiducom", "wikipediaorg", "applecom", "outlooklivecom", "awsamazoncom", "officecom", "buzzfeedcom", "nlgodaddycom", "dsalipaycom", "mozillaorg", "okezonecom", "stackoverflowcom", "apacheorg", "theguardiancom", "stackexchangecom", "paypalcomp", "forbescom", "bookingcom", "bbccom", "amazonin")
 
@@ -24,7 +25,7 @@ experiment_results$load_time <- as.numeric(experiment_results$load_time)
 # Generate boxplots
 for (subject_id in 1:length(subjects)){
   subject_data <- experiment_results[experiment_results$subject_id == subject_id,]
-  boxplot_title <- paste("Boxplot for", subjects[subject_id], "- ID", subject_id, "- Rank", subject_data[1,INDEX_SUBJECT_RANK])
+  plot_title <- paste("Boxplot for", subjects[subject_id], "- ID", subject_id, "- Rank", subject_data[1,INDEX_SUBJECT_RANK])
   file_name <- paste(PATH_PLOT_BOXPLOT, "boxplot-id-", subject_id, "-rank-", subject_data[1,INDEX_SUBJECT_RANK], "-url-", subjects[subject_id],".png", sep="")
   label_x <- "Optimization Level"
   label_y_time <- "Load Time (ms)"
@@ -40,7 +41,43 @@ for (subject_id in 1:length(subjects)){
           energy_consumed ~ opt_level, 
           xlab = label_x,
           ylab = label_y_energy)
-  title(boxplot_title, line = -2.5, outer = TRUE)
+  title(plot_title, line = -2.5, outer = TRUE)
   dev.off()
+}
+par(mfrow=c(1,1))
+
+# Generate histograns
+for (subject_id in 1:length(subjects)){
+  subject_data <- experiment_results[experiment_results$subject_id == subject_id,]
+  plot_title <- paste("Histogram for", subjects[subject_id], "- ID", subject_id, "- Rank", subject_data[1,INDEX_SUBJECT_RANK])
+  file_name <- paste(PATH_PLOT_HISTOGRAM, "histogram-id-", subject_id, "-rank-", subject_data[1,INDEX_SUBJECT_RANK], "-url-", subjects[subject_id], sep="")
+  file_name_time <- paste(file_name, "-time.png", sep="")
+  file_name_energy <- paste(file_name, "-energy.png", sep="")
+  label_x_time <- "Load Time (ms)"
+  label_x_energy <- "Energy Consumption (J)"
+  
+  png(file_name_time, units="px", width=640, height=360)
+  par(mfrow=c(2,2))
+  for (opt_lvl in seq(1:4)){
+    hist_title <- paste("Optimization Level ", opt_lvl, sep="")
+    hist(subject_data$load_time, 
+         xlab = label_x_time,
+         main=hist_title)
+  }
+  title(plot_title, line = -1, outer = TRUE)
+  dev.off()
+  
+  png(file_name_energy, units="px", width=640, height=360)
+  par(mfrow=c(2,2))
+  for (opt_lvl in seq(1:4)){
+    hist_title <- paste("Optimization Level ", opt_lvl, sep="")
+    hist(subject_data$energy_consumed, 
+         xlab = label_x_energy,
+         main=hist_title)
+  }
+  title(plot_title, line = -1, outer = TRUE)
+  dev.off()
+
+
 }
 par(mfrow=c(1,1))
