@@ -59,9 +59,10 @@ for (subject_id in 1:length(subjects)){
   
   png(file_name_time, units="px", width=640, height=360)
   par(mfrow=c(2,2))
-  for (opt_lvl in seq(1:4)){
+  for (opt_lvl in 0:3){
     subplot_title <- paste("Optimization Level ", opt_lvl, sep="")
-    hist(subject_data$load_time, 
+    subject_opt_level_data <- subject_data[subject_data$opt_level == opt_lvl,]
+    hist(subject_opt_level_data$load_time, 
          xlab = label_x_time,
          main=subplot_title)
   }
@@ -70,9 +71,10 @@ for (subject_id in 1:length(subjects)){
   
   png(file_name_energy, units="px", width=640, height=360)
   par(mfrow=c(2,2))
-  for (opt_lvl in seq(1:4)){
+  for (opt_lvl in 0:3){
     subplot_title <- paste("Optimization Level ", opt_lvl, sep="")
-    hist(subject_data$energy_consumed, 
+    subject_opt_level_data <- subject_data[subject_data$opt_level == opt_lvl,]
+    hist(subject_opt_level_data$energy_consumed, 
          xlab = label_x_energy,
          main=subplot_title)
   }
@@ -94,9 +96,10 @@ for (subject_id in 1:length(subjects)){
   
   png(file_name_time, units="px", width=640, height=360)
   par(mfrow=c(2,2))
-  for (opt_lvl in seq(1:4)){
+  for (opt_lvl in 0:3){
     subplot_title <- paste("Optimization Level ", opt_lvl, sep="")
-    plot(data = subject_data, 
+    subject_opt_level_data <- subject_data[subject_data$opt_level == opt_lvl,]
+    plot(data = subject_opt_level_data, 
          energy_consumed ~ load_time,
          xlab= label_x,
          ylab = label_y,
