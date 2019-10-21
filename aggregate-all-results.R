@@ -33,8 +33,8 @@ androidrunner_outputs <- list.files(path = PATH_OUTPUT,
 
 androidrunner_results <- rbindlist(lapply(androidrunner_outputs,fread))
 
-# Drop unecessary columns
-androidrunner_results <- androidrunner_results[, -1]
+# Keep relevant columns only
+androidrunner_results <- androidrunner_results[, c("subject", "load_time", "energy_consumed")]
 
 
 # Clean subject URL
@@ -51,7 +51,7 @@ androidrunner_results$subject_size <- apply(androidrunner_results, 2, nchar)[, I
 androidrunner_results$opt_level <- substring(androidrunner_results$subject, androidrunner_results$subject_size)
 androidrunner_results$subject <- substring(androidrunner_results$subject, 0, androidrunner_results$subject_size - 1)
 androidrunner_results$subject <- substring(androidrunner_results$subject, 0, (androidrunner_results$subject_size - 1)/2)
-androidrunner_results <- androidrunner_results[, -6]
+androidrunner_results <- androidrunner_results[, -5]
 
 # Obtain subject information
 androidrunner_results$subject <- as.factor(androidrunner_results$subject)
