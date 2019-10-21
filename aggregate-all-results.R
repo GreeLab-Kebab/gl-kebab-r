@@ -78,4 +78,4 @@ androidrunner_results <- androidrunner_results[
   order(
     androidrunner_results$subject_id, 
     androidrunner_results$opt_level),]
-write.csv(androidrunner_results, file=FILE_ALL_RESULTS)
+write.csv(androidrunner_results, file=FILE_ALL_RESULTS, row.names = FALSE)
