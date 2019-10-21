@@ -10,6 +10,7 @@ INDEX_TIME <- 4
 
 PATH_OUTPUT <- "data/androidrunner/output"
 FILE_AGGREGATED_RESULTS <- "\\Aggregated_Results_Batterystats.csv$"
+FILE_ALL_RESULTS <- "data/androidrunner/experiment_all_results.csv"
 
 TEXT_TO_IGNORE <- c(
   "http1042018080", 
@@ -71,3 +72,10 @@ androidrunner_results %>%
   group_by(subject_id, opt_level) %>%
   count() %>%
   print(n=100)
+
+# Store dataframe as csv
+androidrunner_results <- androidrunner_results[
+  order(
+    androidrunner_results$subject_id, 
+    androidrunner_results$opt_level),]
+write.csv(androidrunner_results, file=FILE_ALL_RESULTS)
