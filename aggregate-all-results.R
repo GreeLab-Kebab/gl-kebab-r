@@ -1,5 +1,7 @@
 #install.packages("data.table")
-library(data.table)
+#install.packages("tidyverse")
+library(data.table) #
+library(tidyverse) # dplyr
 
 INDEX_SUBJECT <- 1
 INDEX_RUN <- 2
@@ -64,3 +66,8 @@ androidrunner_results$opt_level <- as.factor(androidrunner_results$opt_level)
 androidrunner_results$energy_consumed <- as.numeric(as.character(androidrunner_results$energy_consumed))
 androidrunner_results$load_time <- as.numeric(androidrunner_results$load_time)
 
+# Print the count of occurances to find the missing rows
+androidrunner_results %>% 
+  group_by(subject_id, opt_level) %>%
+  count() %>%
+  print(n=100)
