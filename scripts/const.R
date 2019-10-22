@@ -19,7 +19,10 @@ KB_CSV_PATH_OUTPUT <- "data/androidrunner/output"
 KB_CSV_FILE_AGGREGATED_RESULTS <- "\\Aggregated_Results_Batterystats.csv$"
 KB_CSV_FILE_ALL_RESULTS_FORMATTED <- "data/androidrunner/experiment_all_results.csv"
 KB_CSV_FILE_ALL_RESULTS_RAW <- "data/androidrunner/experiment_all_results_raw.csv"
+
 KB_CSV_FILE_TEST_SUMMARY_SHAPIRO <- "data/tests/test-shapiro-all-subjects-summart.csv"
+KB_CSV_FILE_TEST_SUMMARY_KRUSKAL <- "data/tests/test-kruskal-all-subjects-summart.csv"
+KB_CSV_FILE_TEST_SUMMARY_WILCOX <- "data/tests/test-wilcox-all-subjects-summart.csv"
 
 KB_TXT_PATH_TEST <- "data/tests/"
 

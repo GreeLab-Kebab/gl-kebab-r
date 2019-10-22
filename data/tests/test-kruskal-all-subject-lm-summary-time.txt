@@ -1,0 +1,21 @@
+
+Call:
+lm(formula = load_time ~ opt_level, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-155.84  -94.40  -47.36   51.29 1380.16 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  361.293     10.154  35.582   <2e-16 ***
+opt_level1   -17.293     14.113  -1.225    0.221    
+opt_level2    -1.455     14.192  -0.103    0.918    
+opt_level3   -10.859     14.274  -0.761    0.447    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 145.4 on 846 degrees of freedom
+Multiple R-squared:  0.002391,	Adjusted R-squared:  -0.001147 
+F-statistic: 0.6759 on 3 and 846 DF,  p-value: 0.567
+

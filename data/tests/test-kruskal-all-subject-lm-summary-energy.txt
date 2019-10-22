@@ -1,0 +1,21 @@
+
+Call:
+lm(formula = energy_consumed ~ opt_level, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-23.088  -4.748   1.028   3.681 140.839 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  75.0550     0.8941  83.943  < 2e-16 ***
+opt_level1    4.4845     1.2427   3.609 0.000326 ***
+opt_level2    0.1323     1.2497   0.106 0.915719    
+opt_level3   -2.0030     1.2569  -1.594 0.111401    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 12.8 on 846 degrees of freedom
+Multiple R-squared:  0.03383,	Adjusted R-squared:  0.03041 
+F-statistic: 9.875 on 3 and 846 DF,  p-value: 2.099e-06
+

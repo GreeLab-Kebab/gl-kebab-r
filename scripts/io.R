@@ -26,6 +26,14 @@ kb_write_csv_test_summary_shapiro <- function(data) {
   kb_write_csv(data, KB_CSV_FILE_TEST_SUMMARY_SHAPIRO)
 }
 
+kb_write_csv_test_summary_kruskal <- function(data) {
+  kb_write_csv(data, KB_CSV_FILE_TEST_SUMMARY_KRUSKAL)
+}
+
+kb_write_csv_test_summary_wilcox <- function(data) {
+  kb_write_csv(data, KB_CSV_FILE_TEST_SUMMARY_WILCOX)
+}
+
 kb_write_csv <- function(data, file_name) {
   write.csv(data, file=file_name, row.names = FALSE)
 }
