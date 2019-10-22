@@ -4,15 +4,10 @@
 ##
 
 library('tidyverse') # dplyr
+library('xtable')
 
+source('scripts/const.R')
 source('scripts/subject.R')
-
-KB_CSV_PATH_OUTPUT <- "data/androidrunner/output"
-KB_CSV_FILE_AGGREGATED_RESULTS <- "\\Aggregated_Results_Batterystats.csv$"
-KB_CSV_FILE_ALL_RESULTS_FORMATTED <- "data/androidrunner/experiment_all_results.csv"
-KB_CSV_FILE_ALL_RESULTS_RAW <- "data/androidrunner/experiment_all_results_raw.csv"
-
-KB_RUNS_NUMBER <- 10
 
 #
 # CSV IO
@@ -20,17 +15,19 @@ KB_RUNS_NUMBER <- 10
 
 kb_write_csv_formated <- function(data){
   data_sorted <- data[order(data$subject_id, data$opt_level),]
-  write.csv(
-    data_sorted, 
-    file=KB_CSV_FILE_ALL_RESULTS_FORMATTED, 
-    row.names = FALSE)
+  kb_write_csv(data_sorted, KB_CSV_FILE_ALL_RESULTS_FORMATTED)
 }
 
 kb_write_csv_raw <- function(data){
-  write.csv(
-    data, 
-    file=KB_CSV_FILE_ALL_RESULTS_RAW, 
-    row.names = FALSE)
+  kb_write_csv(data, KB_CSV_FILE_ALL_RESULTS_RAW)
+}
+
+kb_write_csv_test_summary_shapiro <- function(data) {
+  kb_write_csv(data, KB_CSV_FILE_TEST_SUMMARY_SHAPIRO)
+}
+
+kb_write_csv <- function(data, file_name) {
+  write.csv(data, file=file_name, row.names = FALSE)
 }
 
 kb_read_csv_raw <- function() {
@@ -72,4 +69,20 @@ kb_print_count_per_subject_opt_level <- function(data, failed_only){
       count() %>%
       print(n=100)
   }
+}
+
+kb_print_test_result <- function(test_result, title) {
+  print(paste("=========[ NORMALITY TEST FOR: '", title, "' ]=========", sep=''))
+  is_normally_distributed = !(test_result$p.value < 0.05);
+  print(test_result)
+  print(paste("evidence for normal distribution: ", is_normally_distributed,sep=''))
+  print(paste("=========[ END NORMALITY TEST FOR: '", title, "' ]=========", sep=''))
+}
+
+#
+# Text File IO
+#
+kb_write_txt_test_result <- function(test_result, file_name) {
+  text <- capture.output(print(test_result))
+  writeLines(text, con = file(paste(KB_TXT_PATH_TEST, file_name, sep="")))
 }

@@ -3,19 +3,8 @@
 # This R script refers to the Plots operations
 ##
 
+source('scripts/const.R')
 source('scripts/subject.R')
-
-KB_FIGURE_PATH_BOXPLOT <- "plots/boxplots/"
-KB_FIGURE_PATH_HISTOGRAM <- "plots/histograms/"
-KB_FIGURE_PATH_SCATTER <- "plots/scatter-plots/"
-KB_FIGURE_PATH_QQ <- "plots/qq-plots/"
-
-KB_LBL_OPT_LVL <- "Optimization Level"
-KB_LBL_TIME <- "Load Time (ms)"
-KB_LBL_ENERGY <- "Energy Consumption (J)"
-
-KB_PLOT_HEIGHT_12 <- 360
-KB_PLOT_WIDTH_12 <- 640
 
 #
 # BoxPlots
