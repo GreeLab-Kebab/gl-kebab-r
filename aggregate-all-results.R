@@ -1,7 +1,8 @@
 #install.packages("data.table")
 #install.packages("tidyverse")
-library(data.table) #
-library(tidyverse) # dplyr
+library('data.table') #
+library('tidyverse') # dplyr
+library('stringr') #str_replace_all
 
 INDEX_SUBJECT <- 1
 INDEX_RUN <- 2
@@ -33,6 +34,7 @@ androidrunner_outputs <- list.files(path = PATH_OUTPUT,
                                   pattern=FILE_AGGREGATED_RESULTS)
 
 androidrunner_results <- rbindlist(lapply(androidrunner_outputs,fread))
+androidrunner_raw_results <- androidrunner_results
 
 # Keep relevant columns only
 androidrunner_results <- androidrunner_results[, c("subject", "load_time", "energy_consumed")]
@@ -40,10 +42,7 @@ androidrunner_results <- androidrunner_results[, c("subject", "load_time", "ener
 
 # Clean subject URL
 for(ignore in TEXT_TO_IGNORE){
-  androidrunner_results <- data.frame(lapply(androidrunner_results, 
-                                             function(x){
-                                               gsub(ignore, "", x)
-                                             }))
+  androidrunner_results$subject = str_replace_all(androidrunner_results$subject, ignore, "")
 }
 
 # Extract the optimization level used and clean up subejct URL
@@ -65,7 +64,7 @@ androidrunner_results$subject_rank <- as.factor(androidrunner_results$subject_ra
 androidrunner_results$subject_id <- as.factor(androidrunner_results$subject_id)
 androidrunner_results$opt_level <- as.factor(androidrunner_results$opt_level)
 androidrunner_results$energy_consumed <- as.numeric(as.character(androidrunner_results$energy_consumed))
-androidrunner_results$load_time <- as.numeric(androidrunner_results$load_time)
+#androidrunner_results$load_time <- as.numeric(androidrunner_results$load_time)
 
 # Print the count of occurances to find the missing rows
 androidrunner_results %>% 

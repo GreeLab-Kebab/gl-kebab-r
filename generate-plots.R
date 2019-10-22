@@ -1,3 +1,7 @@
+##
+# Green lab 2019 - Team Kebab
+# This R script refers to the 
+##
 FILE_EXPERIMENT_RESULTS <- "data/androidrunner/experiment_all_results.csv"
 
 INDEX_SUBJECT_ID = 5
