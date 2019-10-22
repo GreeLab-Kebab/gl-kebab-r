@@ -47,7 +47,7 @@ for (subject_id in 1:length(subjects)){
 }
 par(mfrow=c(1,1))
 
-# Generate histograns
+# Generate histograns per subject~opt_level combination
 for (subject_id in 1:length(subjects)){
   subject_data <- experiment_results[experiment_results$subject_id == subject_id,]
   plot_title <- paste("Histogram for", subjects[subject_id], "- ID", subject_id, "- Rank", subject_data[1,INDEX_SUBJECT_RANK])
@@ -83,18 +83,36 @@ for (subject_id in 1:length(subjects)){
 }
 par(mfrow=c(1,1))
 
+# Generate histograns per opt_level
+for (opt_level in 0:3){
+  opt_level_data <- experiment_results[experiment_results$opt_level == opt_level,]
+  plot_title <- paste("Histogram for optimization level ", opt_level)
+  file_name <- paste(PATH_PLOT_HISTOGRAM, "histogram-opt-level-", opt_level, ".png", sep="")
+  label_x_time <- "Load Time (ms)"
+  label_x_energy <- "Energy Consumption (J)"
+  
+  png(file_name, units="px", width=640, height=360)
+  par(mfrow=c(1,2))
+  hist(opt_level_data$load_time, 
+       xlab = label_x_time,
+       main="")
+  hist(opt_level_data$energy_consumed, 
+       xlab = label_x_energy,
+       main="")
+  title(plot_title, line = -2.5, outer = TRUE)
+  dev.off()
+}
+par(mfrow=c(1,1))
 
-# Generate Scatter Plots
+# Generate Scatter Plots per subject~opt_level combination
 for (subject_id in 1:length(subjects)){
   subject_data <- experiment_results[experiment_results$subject_id == subject_id,]
   plot_title <- paste("Scatter Plots for", subjects[subject_id], "- ID", subject_id, "- Rank", subject_data[1,INDEX_SUBJECT_RANK])
-  file_name <- paste(PATH_PLOT_SCATTER, "scatter-plot-id-", subject_id, "-rank-", subject_data[1,INDEX_SUBJECT_RANK], "-url-", subjects[subject_id], sep="")
-  file_name_time <- paste(file_name, "-time.png", sep="")
-  file_name_energy <- paste(file_name, "-energy.png", sep="")
+  file_name <- paste(PATH_PLOT_SCATTER, "scatter-plot-id-", subject_id, "-rank-", subject_data[1,INDEX_SUBJECT_RANK], "-url-", subjects[subject_id], ".png", sep="")
   label_x <- "Load Time (ms)"
   label_y <- "Energy Consumption (J)"
   
-  png(file_name_time, units="px", width=640, height=360)
+  png(file_name, units="px", width=640, height=360)
   par(mfrow=c(2,2))
   for (opt_lvl in 0:3){
     subplot_title <- paste("Optimization Level ", opt_lvl, sep="")
@@ -108,6 +126,28 @@ for (subject_id in 1:length(subjects)){
     lines(lowess(subject_data$energy_consumed,subject_data$load_time), col="blue") # lowess line (x,y)
   }
   title(plot_title, line = -1, outer = TRUE)
+  dev.off()
+}
+par(mfrow=c(1,1))
+
+# Generate Scatter Plots per opt_level
+for (opt_level in 0:3){
+  opt_level_data <- experiment_results[experiment_results$opt_level == opt_level,]
+  plot_title <- paste("Scatter Plots for optimization level ", opt_level, sep="")
+  file_name <- paste(PATH_PLOT_SCATTER, "scatter-plot-opt-level-", opt_level, ".png", sep="")
+  label_x <- "Load Time (ms)"
+  label_y <- "Energy Consumption (J)"
+  
+  png(file_name, units="px", width=640, height=360)
+  par(mfrow=c(1,1))
+  plot(data = opt_level_data, 
+       energy_consumed ~ load_time,
+       xlab= label_x,
+       ylab = label_y,
+       main=subplot_title)
+  abline(lm(subject_data$energy_consumed ~ subject_data$load_time), col="red") # regression line (y~x)
+  lines(lowess(subject_data$energy_consumed,subject_data$load_time), col="blue") # lowess line (x,y)
+  title(plot_title, line = -2.5, outer = TRUE)
   dev.off()
 }
 par(mfrow=c(1,1))
