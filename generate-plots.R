@@ -23,3 +23,6 @@ kb_plot_scatter_per_subject(experiment_results)
 kb_plot_scatter_per_subject2(experiment_results)
 kb_plot_scatter_all_subject(experiment_results)
 kb_plot_scatter_all_subject2(experiment_results)
+
+# QQ-Plot
+kb_plot_qqplot_all_subjects(experiment_results)

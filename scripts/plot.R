@@ -8,6 +8,7 @@ source('scripts/subject.R')
 KB_FIGURE_PATH_BOXPLOT <- "plots/boxplots/"
 KB_FIGURE_PATH_HISTOGRAM <- "plots/histograms/"
 KB_FIGURE_PATH_SCATTER <- "plots/scatter-plots/"
+KB_FIGURE_PATH_QQ <- "plots/qq-plots/"
 
 KB_LBL_OPT_LVL <- "Optimization Level"
 KB_LBL_TIME <- "Load Time (ms)"
@@ -107,7 +108,6 @@ kb_plot_histogram_all_subject <- function(data) {
       file_name = file_name
     )
   }
-
 }
 
 kb_plot_histogram <- function(data, plot_title="Histogram", file_name="hist.png") {
@@ -239,6 +239,42 @@ kb_plot_scatter2 <- function(data, plot_title="Scatter", file_name="scatter.png"
   lines(lowess(data$energy_consumed,data$load_time), col="blue") # lowess line (x,y)
   
   title(plot_title, line = -2.5, outer = TRUE)
+  dev.off()
+  par(mfrow=c(1,1))
+}
+
+#
+# QQ plot
+#
+
+kb_plot_qqplot_all_subjects <- function(data) {
+  for (opt_level in 0:3){
+    opt_lvl_rows <- kb_get_subject_rows_by_opt_level(data, opt_level)
+    plot_title <- paste("QQ-Plot for optimization level ", opt_level)
+    file_name <- paste(KB_FIGURE_PATH_QQ, "qq-all-subjects-opt-level-", opt_level, ".png", sep="")
+    
+    kb_plot_qq(
+      data = opt_lvl_rows,
+      plot_title = plot_title,
+      file_name = file_name
+    )
+  }
+}
+
+kb_plot_qq <- function(data, plot_title="QQ-Plot", file_name="qq.png") {
+  png(file_name, 
+      units="px", 
+      width=KB_PLOT_WIDTH_12, 
+      height=KB_PLOT_HEIGHT_12)
+  par(mfrow=c(1,2))
+  
+  qqnorm(data$load_time,
+       main=KB_LBL_TIME)
+  
+  qqnorm(data$energy_consumed,
+         main=KB_LBL_ENERGY)
+
+  title(plot_title, line = -1.0, outer = TRUE)
   dev.off()
   par(mfrow=c(1,1))
 }
