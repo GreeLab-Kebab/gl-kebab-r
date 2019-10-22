@@ -4,18 +4,18 @@ lm(formula = energy_consumed ~ opt_level, data = data)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--23.088  -4.748   1.028   3.681 140.839 
+-22.953  -4.611   1.059   3.705 141.005 
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  75.0550     0.8941  83.943  < 2e-16 ***
-opt_level1    4.4845     1.2427   3.609 0.000326 ***
-opt_level2    0.1323     1.2497   0.106 0.915719    
-opt_level3   -2.0030     1.2569  -1.594 0.111401    
+(Intercept) 75.01020    0.82478  90.946  < 2e-16 ***
+opt_level1   4.36297    1.16641   3.740 0.000195 ***
+opt_level2   0.04211    1.17288   0.036 0.971365    
+opt_level3  -2.02555    1.16641  -1.737 0.082803 .  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 12.8 on 846 degrees of freedom
-Multiple R-squared:  0.03383,	Adjusted R-squared:  0.03041 
-F-statistic: 9.875 on 3 and 846 DF,  p-value: 2.099e-06
+Residual standard error: 12.51 on 911 degrees of freedom
+Multiple R-squared:  0.03386,	Adjusted R-squared:  0.03068 
+F-statistic: 10.64 on 3 and 911 DF,  p-value: 7.014e-07
 

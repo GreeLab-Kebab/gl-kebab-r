@@ -2,5 +2,5 @@
 	Shapiro-Wilk normality test
 
 data:  opt_level_rows$load_time
-W = 0.75711, p-value < 2.2e-16
+W = 0.7548, p-value < 2.2e-16
 

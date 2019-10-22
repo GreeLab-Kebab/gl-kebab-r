@@ -2,5 +2,5 @@
 	Shapiro-Wilk normality test
 
 data:  opt_level_rows$energy_consumed
-W = 0.93619, p-value = 4.413e-08
+W = 0.93591, p-value = 2.335e-08
 

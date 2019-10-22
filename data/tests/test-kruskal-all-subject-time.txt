@@ -2,5 +2,5 @@
 	Kruskal-Wallis rank sum test
 
 data:  data$load_time and data$opt_level
-Kruskal-Wallis chi-squared = 3.7414, df = 3, p-value = 0.2908
+Kruskal-Wallis chi-squared = 2.7602, df = 3, p-value = 0.4301
 

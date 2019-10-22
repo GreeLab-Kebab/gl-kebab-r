@@ -2,5 +2,5 @@
 	Kruskal-Wallis rank sum test
 
 data:  data$energy_consumed and data$opt_level
-Kruskal-Wallis chi-squared = 25.987, df = 3, p-value = 9.599e-06
+Kruskal-Wallis chi-squared = 27.56, df = 3, p-value = 4.492e-06
 
