@@ -23,7 +23,7 @@ experiment_results$opt_level <- as.factor(experiment_results$opt_level)
 experiment_results$energy_consumed <- as.numeric(as.character(experiment_results$energy_consumed))
 experiment_results$load_time <- as.numeric(experiment_results$load_time)
 
-# Generate boxplots
+# Generate boxplots per subject
 for (subject_id in 1:length(subjects)){
   subject_data <- experiment_results[experiment_results$subject_id == subject_id,]
   plot_title <- paste("Boxplot for", subjects[subject_id], "- ID", subject_id, "- Rank", subject_data[1,INDEX_SUBJECT_RANK])
@@ -45,6 +45,28 @@ for (subject_id in 1:length(subjects)){
   title(plot_title, line = -2.5, outer = TRUE)
   dev.off()
 }
+par(mfrow=c(1,1))
+
+# Generate boxplots for all subjects
+plot_title <- paste("Boxplot for all subjects ", sep="")
+file_name <- paste(PATH_PLOT_BOXPLOT, "boxplot-all-subject.png", sep="")
+
+label_x <- "Optimization Level"
+label_y_time <- "Load Time (ms)"
+label_y_energy <- "Energy Consumption (J)"
+
+png(file_name, units="px", width=640, height=360)
+par(mfrow=c(1,2))
+boxplot(data = experiment_results, 
+        load_time ~ opt_level, 
+        xlab = label_x,
+        ylab = label_y_time)
+boxplot(data = experiment_results, 
+        energy_consumed ~ opt_level, 
+        xlab = label_x,
+        ylab = label_y_energy)
+title(plot_title, line = -2.5, outer = TRUE)
+dev.off()
 par(mfrow=c(1,1))
 
 # Generate histograns per subject~opt_level combination
