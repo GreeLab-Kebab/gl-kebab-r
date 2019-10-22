@@ -144,7 +144,7 @@ for (opt_level in 0:3){
        energy_consumed ~ load_time,
        xlab= label_x,
        ylab = label_y,
-       main=subplot_title)
+       main="")
   abline(lm(subject_data$energy_consumed ~ subject_data$load_time), col="red") # regression line (y~x)
   lines(lowess(subject_data$energy_consumed,subject_data$load_time), col="blue") # lowess line (x,y)
   title(plot_title, line = -2.5, outer = TRUE)
