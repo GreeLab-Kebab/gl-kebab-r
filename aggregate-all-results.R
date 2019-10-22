@@ -4,77 +4,32 @@ library('data.table') #
 library('tidyverse') # dplyr
 library('stringr') #str_replace_all
 
-INDEX_SUBJECT <- 1
-INDEX_RUN <- 2
-INDEX_ENERGY <- 3
-INDEX_TIME <- 4
-
-PATH_OUTPUT <- "data/androidrunner/output"
-FILE_AGGREGATED_RESULTS <- "\\Aggregated_Results_Batterystats.csv$"
-FILE_ALL_RESULTS <- "data/androidrunner/experiment_all_results.csv"
-
-TEXT_TO_IGNORE <- c(
-  "http1042018080", 
-  "indexhtml", 
-  "homehtml", 
-  "internationalhtml", 
-  "en-us", 
-  "www",
-  "owa")
-
-subjects <- data.frame(
-  "id" = seq(1,23),
-  "URL" = c("myoutubecom", "amazoncom", "linkedincom", "baiducom", "wikipediaorg", "applecom", "outlooklivecom", "awsamazoncom", "officecom", "buzzfeedcom", "nlgodaddycom", "dsalipaycom", "mozillaorg", "okezonecom", "stackoverflowcom", "apacheorg", "theguardiancom", "stackexchangecom", "paypalcomp", "forbescom", "bookingcom", "bbccom", "amazonin"),
-  "rank" = c(4, 7, 9, 11, 12, 14, 17, 38, 42, 43, 52, 53, 56, 62, 67, 80, 84, 87, 88, 102, 104, 109, 143))
+source('scripts/io.R')
+source("scripts/subject.R")
+source('scripts/preprocessing.R')
 
 # Read Data
-androidrunner_outputs <- list.files(path = PATH_OUTPUT, 
-                                  full.names = TRUE, 
-                                  recursive = TRUE, 
-                                  pattern=FILE_AGGREGATED_RESULTS)
-
-androidrunner_results <- rbindlist(lapply(androidrunner_outputs,fread))
-androidrunner_raw_results <- androidrunner_results
+experiment_results_raw <- experiment_results <- kb_read_csv_raw()
 
 # Keep relevant columns only
-androidrunner_results <- androidrunner_results[, c("subject", "load_time", "energy_consumed")]
+experiment_results <- kb_keep_revevant_columns_only(
+  data = experiment_results, 
+  columns = KB_COLUMNS_KEEP_RAW)
 
-
-# Clean subject URL
-for(ignore in TEXT_TO_IGNORE){
-  androidrunner_results$subject = str_replace_all(androidrunner_results$subject, ignore, "")
-}
-
-# Extract the optimization level used and clean up subejct URL
-androidrunner_results$opt_level <- -1
-androidrunner_results$subject_size <- apply(androidrunner_results, 2, nchar)[, INDEX_SUBJECT]
-androidrunner_results$opt_level <- substring(androidrunner_results$subject, androidrunner_results$subject_size)
-androidrunner_results$subject <- substring(androidrunner_results$subject, 0, androidrunner_results$subject_size - 1)
-androidrunner_results$subject <- substring(androidrunner_results$subject, 0, (androidrunner_results$subject_size - 1)/2)
-androidrunner_results <- androidrunner_results[, -5]
+# Clean subject URL and extract optimization level
+experiment_results <- kb_remove_text_from_subject_url(data = experiment_results)
+experiment_results <- kb_extract_opt_level(data = experiment_results)
+experiment_results <- kb_remove_subject_url_duplication(data = experiment_results)
 
 # Obtain subject information
-androidrunner_results$subject <- as.factor(androidrunner_results$subject)
-androidrunner_results$subject_id <- subjects$id[match(androidrunner_results$subject, subjects$URL)]
-androidrunner_results$subject_rank <- subjects$rank[match(androidrunner_results$subject, subjects$URL)]
-colnames(androidrunner_results)[INDEX_SUBJECT] <- "subject_url"
+experiment_results <- kb_merge_subject_data(data = experiment_results)
 
 # Set correct tyypes
-androidrunner_results$subject_rank <- as.factor(androidrunner_results$subject_rank)
-androidrunner_results$subject_id <- as.factor(androidrunner_results$subject_id)
-androidrunner_results$opt_level <- as.factor(androidrunner_results$opt_level)
-androidrunner_results$energy_consumed <- as.numeric(as.character(androidrunner_results$energy_consumed))
-#androidrunner_results$load_time <- as.numeric(androidrunner_results$load_time)
+experiment_results <- kb_set_dataframe_column_types(data = experiment_results)
 
 # Print the count of occurances to find the missing rows
-androidrunner_results %>% 
-  group_by(subject_id, opt_level) %>%
-  count() %>%
-  print(n=100)
+kb_print_count_per_subject_opt_level(data = experiment_results, failed_only = TRUE)
 
 # Store dataframe as csv
-androidrunner_results <- androidrunner_results[
-  order(
-    androidrunner_results$subject_id, 
-    androidrunner_results$opt_level),]
-write.csv(androidrunner_results, file=FILE_ALL_RESULTS, row.names = FALSE)
+kb_write_csv_formated(data = experiment_results)
+kb_write_csv_raw(data = experiment_results_raw)
