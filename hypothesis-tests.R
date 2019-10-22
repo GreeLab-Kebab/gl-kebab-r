@@ -1,4 +1,10 @@
-FILE_EXPERIMENT_RESULTS <- "data/androidrunner/experiment_all_results.csv"
+##
+# Green lab 2019 - Team Kebab
+# This R script validate the experiment hypothesis test
+##
+
+source('scripts/io.R')
+source('scripts/subject.R')
 
 kb_test_normality <- function(data, name) {
   print(paste("=========[ NORMALITY TEST FOR: '", name, "' ]=========", sep=''))
@@ -11,26 +17,12 @@ kb_test_normality <- function(data, name) {
   print(paste("=========[ END NORMALITY TEST FOR: '", name, "' ]=========", sep=''))
 }
 
-kb_load_data <- function() {
-  # Read data and set column types
-  experiment_results  <- read.csv(FILE_EXPERIMENT_RESULTS, header = TRUE)
-  
-  experiment_results$subject_url <- as.factor(experiment_results$subject_url)
-  experiment_results$subject_rank <- as.factor(experiment_results$subject_rank)
-  experiment_results$subject_id <- as.factor(experiment_results$subject_id)
-  experiment_results$opt_level <- as.factor(experiment_results$opt_level)
-  experiment_results$energy_consumed <- as.numeric(as.character(experiment_results$energy_consumed))
-  experiment_results$load_time <- as.numeric(experiment_results$load_time)
-  
-  experiment_results
-}
+data  <- kb_read_csv_formated()
 
-data = kb_load_data()
-
-data_opt_0 = data[data$opt_level == 0,]
-data_opt_1 = data[data$opt_level == 1,]
-data_opt_2 = data[data$opt_level == 2,]
-data_opt_3 = data[data$opt_level == 3,]
+data_opt_0 = kb_get_subject_rows_by_opt_level(data, 0)
+data_opt_1 = kb_get_subject_rows_by_opt_level(data, 1)
+data_opt_2 = kb_get_subject_rows_by_opt_level(data, 2)
+data_opt_3 = kb_get_subject_rows_by_opt_level(data, 3)
 
 # Verify normality
 par(mfcol=c(4,2))
@@ -62,4 +54,4 @@ kruskal.test(data$energy_consumed, data$opt_level)
 
 
 
-  
+

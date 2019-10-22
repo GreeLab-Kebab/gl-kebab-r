@@ -3,13 +3,12 @@
 # This R script generates basic plots for initial analysis of the data
 ##
 
-source('scripts/io.R')
 source('scripts/subject.R')
+source('scripts/io.R')
 source('scripts/plot.R')
 
 # Read data and set column types
 experiment_results  <- kb_read_csv_formated()
-experiment_results <- kb_set_dataframe_column_types(experiment_results)
 
 # Generate BoxPlots
 kb_plot_boxplot_per_subject(experiment_results)

@@ -5,6 +5,8 @@
 
 library('tidyverse') # dplyr
 
+source('scripts/subject.R')
+
 KB_CSV_PATH_OUTPUT <- "data/androidrunner/output"
 KB_CSV_FILE_AGGREGATED_RESULTS <- "\\Aggregated_Results_Batterystats.csv$"
 KB_CSV_FILE_ALL_RESULTS_FORMATTED <- "data/androidrunner/experiment_all_results.csv"
@@ -50,6 +52,8 @@ kb_read_csv_formated <- function() {
   data <- read.csv(
     KB_CSV_FILE_ALL_RESULTS_FORMATTED, 
     header = TRUE)
+  
+  data <- kb_set_dataframe_column_types(data)
 }
 
 #
