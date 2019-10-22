@@ -1,6 +1,6 @@
 ##
 # Green lab 2019 - Team Kebab
-# This R script refers to the data related to subjects and dataframe types
+# This R script refers to the data related to subjects
 ##
 
 kb_get_subjects_data <- function() {
@@ -28,4 +28,18 @@ kb_set_dataframe_column_types <- function(data, isFormatted = TRUE) {
   }
   
   data
+}
+
+kb_get_subject_rows_by_opt_level <- function(data, opt_lvl) {
+  data[data$opt_level == opt_lvl,]
+}
+
+kb_get_subject_rows_by_id <- function(data, subject_id) {
+  data[data$subject_id == subject_id,]
+}
+
+kb_get_subject_by_id <- function(subject_id) {
+  subjects <- kb_get_subjects_data()
+  
+  subjects[subject_id,]
 }

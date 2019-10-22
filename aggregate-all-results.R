@@ -1,11 +1,16 @@
+##
+# Green lab 2019 - Team Kebab
+# This R script aggregates android runner results in two single CSV files: formatted and raw results
+##
+
 #install.packages("data.table")
 #install.packages("tidyverse")
 library('data.table') #
 library('tidyverse') # dplyr
 library('stringr') #str_replace_all
 
-source('scripts/io.R')
 source("scripts/subject.R")
+source('scripts/io.R')
 source('scripts/preprocessing.R')
 
 # Read Data

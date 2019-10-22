@@ -5,10 +5,10 @@
 
 library('tidyverse') # dplyr
 
-KB_DATA_PATH_OUTPUT <- "data/androidrunner/output"
-KB_DATA_FILE_AGGREGATED_RESULTS <- "\\Aggregated_Results_Batterystats.csv$"
-KB_DATA_FILE_ALL_RESULTS_FORMATTED <- "data/androidrunner/experiment_all_results.csv"
-KB_DATA_FILE_ALL_RESULTS_RAW <- "data/androidrunner/experiment_all_results_raw.csv"
+KB_CSV_PATH_OUTPUT <- "data/androidrunner/output"
+KB_CSV_FILE_AGGREGATED_RESULTS <- "\\Aggregated_Results_Batterystats.csv$"
+KB_CSV_FILE_ALL_RESULTS_FORMATTED <- "data/androidrunner/experiment_all_results.csv"
+KB_CSV_FILE_ALL_RESULTS_RAW <- "data/androidrunner/experiment_all_results_raw.csv"
 
 KB_RUNS_NUMBER <- 10
 
@@ -20,29 +20,35 @@ kb_write_csv_formated <- function(data){
   data_sorted <- data[order(data$subject_id, data$opt_level),]
   write.csv(
     data_sorted, 
-    file=KB_DATA_FILE_ALL_RESULTS_FORMATTED, 
+    file=KB_CSV_FILE_ALL_RESULTS_FORMATTED, 
     row.names = FALSE)
 }
 
 kb_write_csv_raw <- function(data){
   write.csv(
     data, 
-    file=KB_DATA_FILE_ALL_RESULTS_RAW, 
+    file=KB_CSV_FILE_ALL_RESULTS_RAW, 
     row.names = FALSE)
 }
 
 kb_read_csv_raw <- function() {
   file_list <- list.files(
-    path = KB_DATA_PATH_OUTPUT,
+    path = KB_CSV_PATH_OUTPUT,
     full.names = TRUE,
     recursive = TRUE,
-    pattern=KB_DATA_FILE_AGGREGATED_RESULTS)
+    pattern=KB_CSV_FILE_AGGREGATED_RESULTS)
   data <- rbindlist(lapply(file_list, fread))
+}
+
+kb_read_csv_raw2 <- function() {
+  data <- read.csv(
+    KB_CSV_FILE_ALL_RESULTS_RAW, 
+    header = TRUE)
 }
 
 kb_read_csv_formated <- function() {
   data <- read.csv(
-    KB_DATA_FILE_ALL_RESULTS, 
+    KB_CSV_FILE_ALL_RESULTS_FORMATTED, 
     header = TRUE)
 }
 
