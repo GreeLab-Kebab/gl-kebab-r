@@ -175,7 +175,7 @@ kb_plot_scatter_per_subject2 <- function(data) {
 
 kb_plot_scatter_all_subject <- function(data) {
   plot_title <- paste("Scatter Plots all subjects")
-  file_name <- paste(KB_FIGURE_PATH_SCATTER, "scatter-plot-all-subjects.png", sep="")
+  file_name <- paste(KB_FIGURE_PATH_SCATTER, "scatter-all-subjects.png", sep="")
   
   kb_plot_scatter(
     data = data,
@@ -187,7 +187,7 @@ kb_plot_scatter_all_subject <- function(data) {
 kb_plot_scatter_all_subject2 <- function(data) {
   for (opt_level in 0:3) {
     plot_title <- paste("Scatter Plots all subjects - Optimization Level", opt_level)
-    file_name <- paste(KB_FIGURE_PATH_SCATTER, "scatter-plot-all-subjects-opt-lvl", opt_level ,".png", sep="")
+    file_name <- paste(KB_FIGURE_PATH_SCATTER, "scatter-all-subjects-opt-lvl", opt_level ,".png", sep="")
     
     rows <- kb_get_subject_rows_by_opt_level(data, opt_level)
     
@@ -213,7 +213,7 @@ kb_plot_scatter <- function(data, plot_title="Scatter", file_name="scatter.png")
          energy_consumed ~ load_time,
          xlab= KB_LBL_TIME,
          ylab = KB_LBL_ENERGY,
-         main="")
+         main=subplot_title)
     abline(lm(data$energy_consumed ~ data$load_time), col="red") # regression line (y~x)
     lines(lowess(data$energy_consumed,data$load_time), col="blue") # lowess line (x,y)
   }
