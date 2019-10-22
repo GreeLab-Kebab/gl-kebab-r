@@ -218,7 +218,7 @@ kb_plot_scatter <- function(data, plot_title="Scatter", file_name="scatter.png")
     lines(lowess(data$energy_consumed,data$load_time), col="blue") # lowess line (x,y)
   }
   
-  title(plot_title, line = -2.5, outer = TRUE)
+  title(plot_title, line = -1, outer = TRUE)
   dev.off()
   par(mfrow=c(1,1))
 }
