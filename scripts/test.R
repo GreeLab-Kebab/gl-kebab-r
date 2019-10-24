@@ -31,9 +31,9 @@ kb_get_normality_summary_row <- function(result, opt_level, column) {
     kb_reject_null_hypothesis(result$p.value))
 }
 
-kb_test_data_normality <- function(result, opt_level, column) {
+kb_test_data_normality <- function(data, opt_level, column) {
   opt_level_rows = kb_get_subject_rows_by_opt_level(data, opt_level)
-  result <- shapiro.test(opt_level_rows[, column])
+  shapiro.test(opt_level_rows[, column])
 }
 
 kb_create_empty_normality_summary_dataframe <- function() {
@@ -58,10 +58,41 @@ kb_get_kruskal_summary_row <- function(result, column) {
 kb_create_empty_kruskal_summary_dataframe <- function() {
   setNames(data.frame(
     matrix(ncol = 5, nrow = 0)), 
-    c("column", "W",  "df", "p-value", "is_null_hypothesis_true"))
+    c("column", "W",  "parameter df", "p-value", "is_null_hypothesis_true"))
 }
 
 #
 # Wilcox
 #
 
+kb_get_wilcox_summary_row <- function(result, column, opt_level) {
+  c(
+    opt_level,
+    column, 
+    result$statistic, 
+    #result$parameter,
+    result$p.value, 
+    result$null.value, 
+    result$alternative, 
+    kb_reject_null_hypothesis(result$p.value))
+}
+
+kb_create_empty_wilcox_summary_dataframe <- function() {
+  setNames(data.frame(
+    matrix(ncol = 7, nrow = 0)), 
+    c(
+      "opt_level", 
+      "column", 
+      "W",  
+      #"parameter NULL", 
+      "p-value", 
+      "null-value", 
+      "alternative", 
+      "is_null_hypothesis_true"))
+}
+
+kb_test_wilcox <- function(data, opt_level, column) {
+  opt_level_0 = kb_get_subject_rows_by_opt_level(data, 0)
+  opt_level_rows = kb_get_subject_rows_by_opt_level(data, opt_level)
+  wilcox.test(opt_level_0[, column], opt_level_rows[, column])
+}

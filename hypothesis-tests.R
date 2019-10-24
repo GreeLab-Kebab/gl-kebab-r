@@ -57,20 +57,19 @@ kb_write_csv_test_summary_kruskal(kruskal_summary)
 # Test Hypothesis - Not normal - 2 treatment - Wilcox 
 #
 
+wilcox_summary <- kb_create_empty_wilcox_summary_dataframe()
+for(opt_level in 1:3) {
+  for (column in columns) {
+    print(paste(opt_level, column))
+    result <- kb_test_wilcox(data, opt_level, column)
+    
+    new_row <- kb_get_wilcox_summary_row(result, column, opt_level)
+    wilcox_summary[nrow(wilcox_summary) + 1, ] <- new_row
+    
+    title <- paste("Wilcox in ", kb_get_column_label(column))
+    file_name <- paste("test-wilcox-all-subject-opt-level-", opt_level, "-", column, ".txt", sep = "")
+    kb_write_txt_test_result(result, file_name, title)
+  }
+}
 
-data_opt_0 = data[data$opt_level == 0,]
-data_opt_1 = data[data$opt_level == 1,]
-data_opt_2 = data[data$opt_level == 2,]
-data_opt_3 = data[data$opt_level == 3,]
-
-# Tests
-
-
-wilcox.test(data_opt_0$load_time, data_opt_1$load_time)
-wilcox.test(data_opt_0$load_time, data_opt_2$load_time)
-wilcox.test(data_opt_0$load_time, data_opt_3$load_time)
-
-wilcox.test(data_opt_0$energy_consumed, data_opt_1$energy_consumed)
-wilcox.test(data_opt_0$energy_consumed, data_opt_2$energy_consumed)
-wilcox.test(data_opt_0$energy_consumed, data_opt_3$energy_consumed)
-
+kb_write_csv_test_summary_wilcox(wilcox_summary)

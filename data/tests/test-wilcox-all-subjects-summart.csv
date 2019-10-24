@@ -1,0 +1,7 @@
+"opt_level","column","W","p-value","null-value","alternative","is_null_hypothesis_true"
+"1","load_time","28579.5","0.1353139281814","0","two.sided","TRUE"
+"1","energy_consumed","24994.5","0.307421107319414","0","two.sided","TRUE"
+"2","load_time","27373.5","0.517325186474931","0","two.sided","TRUE"
+"2","energy_consumed","26950","0.726047977701842","0","two.sided","TRUE"
+"3","load_time","26721","0.849502781727193","0","two.sided","TRUE"
+"3","energy_consumed","32111","7.16593683828159e-05","0","two.sided","FALSE"
