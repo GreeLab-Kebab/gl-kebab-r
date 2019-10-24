@@ -46,9 +46,5 @@ kb_write_ggplot(
   file_name = paste(KB_FIGURE_PATH_BOXPLOT, "boxplot-energy.png", sep=""))
 
 
-# Scatter
-kb_plot_scatter_all_subject(experiment_results)
-kb_plot_scatter_all_subject2(experiment_results)
-
 # QQ-Plot
 kb_plot_qqplot_all_subjects(experiment_results)

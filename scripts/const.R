@@ -5,7 +5,6 @@
 
 KB_FIGURE_PATH_BOXPLOT <- "plots/boxplots/"
 KB_FIGURE_PATH_HISTOGRAM <- "plots/histograms/"
-KB_FIGURE_PATH_SCATTER <- "plots/scatter-plots/"
 KB_FIGURE_PATH_QQ <- "plots/qq-plots/"
 KB_FIGURE_PATH_VIOLIN <- "plots/violin/"
 
