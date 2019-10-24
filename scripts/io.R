@@ -90,11 +90,9 @@ kb_print_test_result <- function(test_result, title) {
 #
 # Text File IO
 #
-kb_write_txt_test_result <- function(test_result, file_name, title) {
-  text <- capture.output(print(test_result))
+kb_write_txt_test_result <- function(test_result, file_name, title="") {
+  test_output <- capture.output(print(test_result))
   connection <- file(paste(KB_TXT_PATH_TEST, file_name, sep=""))
-  writeLines(title, con = connection)
-  writeLines("", con = connection)
-  writeLines(text, con = connection)
+  writeLines(c(title, test_output), con = connection, sep="\n")
   close(connection)
 }

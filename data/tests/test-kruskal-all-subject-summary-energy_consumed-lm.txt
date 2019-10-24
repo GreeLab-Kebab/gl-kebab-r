@@ -1,0 +1,22 @@
+Kruskal linear model summary in  Energy Consumption (J)
+
+Call:
+lm(formula = data[, column] ~ data$opt_level)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-22.953  -4.611   1.059   3.705 141.005 
+
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     75.01020    0.82478  90.946  < 2e-16 ***
+data$opt_level1  4.36297    1.16641   3.740 0.000195 ***
+data$opt_level2  0.04211    1.17288   0.036 0.971365    
+data$opt_level3 -2.02555    1.16641  -1.737 0.082803 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 12.51 on 911 degrees of freedom
+Multiple R-squared:  0.03386,	Adjusted R-squared:  0.03068 
+F-statistic: 10.64 on 3 and 911 DF,  p-value: 7.014e-07
+

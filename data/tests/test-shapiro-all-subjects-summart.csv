@@ -1,4 +1,4 @@
-"opt_level","property","W","p-value","is_normal_dist"
+"opt_level","column","W","p-value","is_normal_dist"
 "0","load_time","0.754800197107835","3.25916839479967e-18","FALSE"
 "0","energy_consumed","0.922808123256781","1.3815225251299e-09","FALSE"
 "1","load_time","0.74372277409862","1.32562233878512e-18","FALSE"

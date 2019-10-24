@@ -14,11 +14,15 @@ kb_reject_null_hypothesis <- function(p_value) {
   !(p_value < 0.05)
 }
 
+kb_get_column_label <- function(column) {
+  ifelse(column == "load_time", KB_LBL_TIME, KB_LBL_ENERGY)
+}
+
 #
 # Shapiro - Normality test
 #
 
-kb_get_summary_row <- function(result, opt_level, column) {
+kb_get_normality_summary_row <- function(result, opt_level, column) {
   c(
     opt_level, 
     column, 
@@ -35,26 +39,29 @@ kb_test_data_normality <- function(result, opt_level, column) {
 kb_create_empty_normality_summary_dataframe <- function() {
   setNames(data.frame(
     matrix(ncol = 5, nrow = 0)), 
-    c("opt_level", "property", "W", "p-value", "is_normal_dist"))
+    c("opt_level", "column", "W", "p-value", "is_normal_dist"))
 }
 
 #
 # Kruskal
 #
 
-kb_get_result_row_kruskal <- function(result, property) {
+kb_get_kruskal_summary_row <- function(result, column) {
   c(
-    property, 
+    column, 
     result$statistic, 
     result$parameter,
     result$p.value, 
     kb_reject_null_hypothesis(result$p.value))
 }
 
-kb_test_hypothesis_kruskal <- function(data) {
-  result_kruskal <- setNames(data.frame(
+kb_create_empty_kruskal_summary_dataframe <- function() {
+  setNames(data.frame(
     matrix(ncol = 5, nrow = 0)), 
-    c("property", "W",  "df", "p-value", "is_null_hypothesis_true"))
+    c("column", "W",  "df", "p-value", "is_null_hypothesis_true"))
+}
+
+kb_test_hypothesis_kruskal_old <- function(data, column) {
   
   result_time <- kruskal.test(data$load_time, data$opt_level)
   result_energy <- kruskal.test(data$energy_consumed, data$opt_level)

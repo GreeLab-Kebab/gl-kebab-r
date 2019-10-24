@@ -1,6 +1,7 @@
+Kruskal in  Load Time (ms)
 
 	Kruskal-Wallis rank sum test
 
-data:  data$load_time and data$opt_level
+data:  data[, column] and data$opt_level
 Kruskal-Wallis chi-squared = 2.7602, df = 3, p-value = 0.4301
 

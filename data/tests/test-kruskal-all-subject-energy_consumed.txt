@@ -1,6 +1,7 @@
+Kruskal in  Energy Consumption (J)
 
 	Kruskal-Wallis rank sum test
 
-data:  data$energy_consumed and data$opt_level
+data:  data[, column] and data$opt_level
 Kruskal-Wallis chi-squared = 27.56, df = 3, p-value = 4.492e-06
 

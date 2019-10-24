@@ -1,3 +1,4 @@
+Optimization Level 0 - Energy Consumption (J)
 
 	Shapiro-Wilk normality test
 
