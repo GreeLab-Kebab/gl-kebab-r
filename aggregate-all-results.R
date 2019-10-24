@@ -33,7 +33,7 @@ experiment_results <- kb_merge_subject_data(data = experiment_results)
 experiment_results <- kb_set_dataframe_column_types(data = experiment_results)
 
 # Print the count of occurances to find the missing rows
-kb_print_count_per_subject_opt_level(data = experiment_results, failed_only = TRUE)
+#kb_print_count_per_subject_opt_level(data = experiment_results, failed_only = TRUE)
 
 # Store dataframe as csv
 kb_write_csv_formated(data = experiment_results)

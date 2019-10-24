@@ -3,5 +3,5 @@ Optimization Level 2 - Load Time (ms)
 	Shapiro-Wilk normality test
 
 data:  opt_level_rows[, column]
-W = 0.69604, p-value < 2.2e-16
+W = 0.70503, p-value < 2.2e-16
 
