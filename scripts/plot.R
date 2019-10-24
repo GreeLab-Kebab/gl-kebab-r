@@ -4,6 +4,7 @@
 ##
 
 library(ggplot2)
+library(RColorBrewer)
 
 source('scripts/const.R')
 source('scripts/subject.R')
@@ -11,6 +12,7 @@ source('scripts/subject.R')
 #
 # ggplot base config
 #
+
 
 kb_get_plot_base_theme <- function() {
   theme(
@@ -31,8 +33,27 @@ kb_get_plot_base_labs <- function() {
 kb_get_plot_base_aes <- function(){
   aes(
     x=opt_level, 
-    colour = opt_level
+    colour = opt_level,
+    fill = opt_level,
+    alpha = KB_PLOT_ALPHA_FILL_RATIO
   )
+}
+
+kb_get_plot_base_scale <- function(column) {
+  range <- 0
+  ifelse(column == "load_time", 
+         range <- seq(0, 1250, 1250/5),
+         range <- seq(0, 250, 250/5))
+  
+  range
+}
+
+kb_get_plot_base_colors <- function() {
+  myColors <- brewer.pal(4,"Set1")
+  names(myColors) <- as.factor(c("0", "1", "2", "3"))
+  plotColorsScale <- scale_colour_manual(name = "opt_level",values = myColors)
+  
+  plotColorsScale
 }
 
 #
@@ -51,7 +72,7 @@ kb_get_plot_title_x_opt_level <- function(column) {
 # Violin Plot
 #
 
-kb_get_plot_violin <- function(data, column){
+kb_get_plot_violin <- function(data, column, ymin = 0){
   aes <- modifyList(
     kb_get_plot_base_aes(),
     aes_string(
@@ -70,10 +91,6 @@ kb_get_plot_violin <- function(data, column){
     theme())
   
   violin <- geom_violin(
-    aes(
-      fill = opt_level
-    ),
-    alpha = KB_PLOT_ALPHA_FILL_RATIO,
     draw_quantiles = c(0.25, 0.5, 0.75)
   )
   
@@ -81,14 +98,14 @@ kb_get_plot_violin <- function(data, column){
     violin +
     labs +
     theme +
-    expand_limits(y=0)
+    expand_limits(y=ymin)
 }
 
 #
 # BoxPlots
 #
 
-kb_get_plot_boxplot <- function(data, column){
+kb_get_plot_boxplot <- function(data, column, ymin=0){
   aes <- modifyList(
     kb_get_plot_base_aes(),
     aes_string(
@@ -106,56 +123,53 @@ kb_get_plot_boxplot <- function(data, column){
     kb_get_plot_base_theme(),
     theme())
   
-  hist <- geom_boxplot(
-    aes(
-      fill = opt_level
-    ),
-    alpha = KB_PLOT_ALPHA_FILL_RATIO
-  )
+  boxplot <- geom_boxplot()
   
   ggplot(data, aes) + 
-    hist +
+    boxplot +
     labs +
     theme +
-    expand_limits(y=0)
+    expand_limits(y=ymin)
 }
 
 #
 # Histogram
 #
 
-kb_plot_histogram_all_subject <- function(data) {
-  for (opt_level in 0:3){
-    opt_lvl_rows <- kb_get_subject_rows_by_opt_level(data, opt_level)
-    plot_title <- paste("Histogram for optimization level ", opt_level)
-    file_name <- paste(KB_FIGURE_PATH_HISTOGRAM, "histogram-all-subejcts-opt-level-", opt_level, ".png", sep="")
-    
-    kb_plot_histogram(
-      data = opt_lvl_rows,
-      plot_title = plot_title,
-      file_name = file_name
+kb_get_plot_histogram <- function(data, column){
+  aes <- modifyList(
+    kb_get_plot_base_aes(),
+    aes_string(
+      x=column,
+      #fill = "opt_level"
     )
-  }
-}
-
-kb_plot_histogram <- function(data, plot_title="Histogram", file_name="hist.png") {
-  png(file_name, 
-      units="px", 
-      width=KB_PLOT_WIDTH_12, 
-      height=KB_PLOT_HEIGHT_12)
-  par(mfrow=c(1,2))
+  )
   
-  hist(data$load_time, 
-       xlab = KB_LBL_TIME,
-       main="")
+  labs <- modifyList(
+    kb_get_plot_base_labs(),
+    labs(
+      y = kb_get_label(column),
+      title = kb_get_plot_title_x_opt_level(column)
+    ))
   
-  hist(data$energy_consumed, 
-       xlab = KB_LBL_ENERGY,
-       main="")
+  theme <- modifyList(
+    kb_get_plot_base_theme(),
+    theme())
   
-  title(plot_title, line = -2.5, outer = TRUE)
-  dev.off()
-  par(mfrow=c(1,1))
+  hist <- geom_histogram(
+    aes(
+      fill = factor(opt_level)
+    ),
+    bins = 30, # default level, set to avoid warning
+    alpha = KB_PLOT_ALPHA_FILL_RATIO
+  )
+  
+  ggplot(data, aes) + 
+    hist +
+    labs +
+    #theme +
+    scale_x_continuous(breaks = kb_get_plot_base_scale(column)) +
+    kb_get_plot_base_colors()
 }
 
 #
