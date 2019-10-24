@@ -3,13 +3,90 @@
 # This R script refers to the Plots operations
 ##
 
+library(ggplot2)
+
 source('scripts/const.R')
 source('scripts/subject.R')
 
 #
-# BoxPlots
+# ggplot base config
 #
 
+kb_get_plot_base_theme <- function() {
+  theme(
+    legend.position = "none", 
+    plot.title = element_text(hjust=0.5, size = rel(1.5)),
+    axis.text = element_text(size = rel(1)),
+    axis.title = element_text(size = rel(1.25))
+  )
+}
+
+kb_get_plot_base_labs <- function() {
+  labs(
+    colour = KB_LBL_OPT_LVL,
+    x = KB_LBL_OPT_LVL
+  )
+}
+
+kb_get_plot_base_aes <- function(){
+  aes(
+    x=opt_level, 
+    colour = opt_level
+  )
+}
+
+#
+# Misc
+#
+
+kb_get_label <- function(column) {
+  ifelse(column == "load_time", KB_LBL_TIME, KB_LBL_ENERGY)
+}
+
+#
+# Violin Plot
+#
+
+kb_get_violin_plot_title <- function(column) {
+  ifelse(column == "load_time", KB_TITLE_PLOT_VIOLIN_TIME, KB_TITLE_PLOT_VIOLIN_ENERGY)
+}
+
+kb_get_plot_violin <- function(data, column){
+  aes <- modifyList(
+    kb_get_plot_base_aes(),
+    aes_string(
+      y=column
+    ))
+  
+  labs <- modifyList(
+    kb_get_plot_base_labs(),
+    labs(
+      y = kb_get_label(column),
+      title = kb_get_violin_plot_title(column)
+    ))
+  
+  theme <- modifyList(
+    kb_get_plot_base_theme(),
+    theme())
+  
+  violin <- geom_violin(
+    aes(
+      fill = opt_level
+    ),
+    alpha = 1/10,
+    draw_quantiles = c(0.25, 0.5, 0.75)
+  )
+  
+  ggplot(data, aes) + 
+    violin +
+    labs +
+    theme +
+    expand_limits(y=0)
+}
+
+#
+# BoxPlots
+#
 kb_plot_boxplot_all_subjects <- function(data) {
   plot_title <- paste("Boxplot for all subjects", sep="")
   file_name <- paste(KB_FIGURE_PATH_BOXPLOT, "boxplot-all-subject.png", sep="")

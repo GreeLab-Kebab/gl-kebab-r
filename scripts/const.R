@@ -12,6 +12,9 @@ KB_LBL_OPT_LVL <- "Optimization Level"
 KB_LBL_TIME <- "Load Time (ms)"
 KB_LBL_ENERGY <- "Energy Consumption (J)"
 
+KB_TITLE_PLOT_VIOLIN_TIME <- paste(KB_LBL_TIME, "x", KB_LBL_OPT_LVL, "for all subjects")
+KB_TITLE_PLOT_VIOLIN_ENERGY <- paste(KB_LBL_ENERGY, "x", KB_LBL_OPT_LVL, "for all subjects")
+
 KB_PLOT_HEIGHT_12 <- 360
 KB_PLOT_WIDTH_12 <- 640
 
