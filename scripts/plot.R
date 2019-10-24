@@ -43,13 +43,13 @@ kb_get_label <- function(column) {
   ifelse(column == "load_time", KB_LBL_TIME, KB_LBL_ENERGY)
 }
 
+kb_get_plot_title_x_opt_level <- function(column) {
+  ifelse(column == "load_time", KB_TITLE_PLOT_TIME_OPT_LEVEL, KB_TITLE_PLOT_ENERGY_OPT_LEVEL)
+}
+
 #
 # Violin Plot
 #
-
-kb_get_violin_plot_title <- function(column) {
-  ifelse(column == "load_time", KB_TITLE_PLOT_VIOLIN_TIME, KB_TITLE_PLOT_VIOLIN_ENERGY)
-}
 
 kb_get_plot_violin <- function(data, column){
   aes <- modifyList(
@@ -73,7 +73,7 @@ kb_get_plot_violin <- function(data, column){
     aes(
       fill = opt_level
     ),
-    alpha = 1/10,
+    alpha = KB_PLOT_ALPHA_FILL_RATIO,
     draw_quantiles = c(0.25, 0.5, 0.75)
   )
   
@@ -87,36 +87,37 @@ kb_get_plot_violin <- function(data, column){
 #
 # BoxPlots
 #
-kb_plot_boxplot_all_subjects <- function(data) {
-  plot_title <- paste("Boxplot for all subjects", sep="")
-  file_name <- paste(KB_FIGURE_PATH_BOXPLOT, "boxplot-all-subject.png", sep="")
-  
-  kb_plot_boxplot(
-    data = data,
-    plot_title = plot_title,
-    file_name = file_name
-  )
-}
 
-kb_plot_boxplot <- function(data, plot_title="Boxplot", file_name="boxplot.png") { 
-  png(file_name, 
-      units="px", 
-      width=KB_PLOT_WIDTH_12, 
-      height=KB_PLOT_HEIGHT_12)
-  par(mfrow=c(1,2))
+kb_get_plot_boxplot <- function(data, column){
+  aes <- modifyList(
+    kb_get_plot_base_aes(),
+    aes_string(
+      y=column
+    ))
   
-  boxplot(data = data, 
-          load_time ~ opt_level, 
-          xlab = KB_LBL_OPT_LVL,
-          ylab = KB_LBL_TIME)
+  labs <- modifyList(
+    kb_get_plot_base_labs(),
+    labs(
+      y = kb_get_label(column),
+      title = kb_get_plot_title_x_opt_level(column)
+    ))
   
-  boxplot(data = data, 
-          energy_consumed ~ opt_level, 
-          xlab = KB_LBL_OPT_LVL,
-          ylab = KB_LBL_ENERGY)
-  title(plot_title, line = -2.5, outer = TRUE)
-  dev.off()
-  par(mfrow=c(1,1))
+  theme <- modifyList(
+    kb_get_plot_base_theme(),
+    theme())
+  
+  hist <- geom_boxplot(
+    aes(
+      fill = opt_level
+    ),
+    alpha = KB_PLOT_ALPHA_FILL_RATIO
+  )
+  
+  ggplot(data, aes) + 
+    hist +
+    labs +
+    theme +
+    expand_limits(y=0)
 }
 
 #
