@@ -76,6 +76,20 @@ for (opt_lvl in 0:3) {
   }
 }
 
-
+#
 # QQ-Plot
-kb_plot_qqplot_all_subjects(experiment_results)
+#
+for (opt_lvl in 0:3) {
+  for (column in columns) {
+    plot <- kb_get_plot_qq(
+      kb_get_subject_rows_by_opt_level(experiment_results, opt_lvl), 
+      column, 
+      opt_lvl)
+    
+    columnm_lbl <- ifelse(column == "load_time", "time", "energy")
+    
+    kb_write_ggplot(
+      plot = plot, 
+      file_name = paste(KB_FIGURE_PATH_QQ, "qqplot-", columnm_lbl, "-opt_level-", opt_lvl, ".png", sep=""))
+  }
+}

@@ -91,7 +91,7 @@ kb_get_plot_violin <- function(data, column, ymin = 0){
     kb_get_plot_base_labs(),
     labs(
       y = kb_get_label(column),
-      title = kb_get_violin_plot_title(column)
+      title = kb_get_plot_title_x_opt_level(column)
     ))
   
   theme <- modifyList(
@@ -197,34 +197,30 @@ kb_get_plot_histogram <- function(data, column, opt_level){
 # QQ plot
 #
 
-kb_plot_qqplot_all_subjects <- function(data) {
-  for (opt_level in 0:3){
-    opt_lvl_rows <- kb_get_subject_rows_by_opt_level(data, opt_level)
-    plot_title <- paste("QQ-Plot for optimization level ", opt_level)
-    file_name <- paste(KB_FIGURE_PATH_QQ, "qq-all-subjects-opt-level-", opt_level, ".png", sep="")
-    
-    kb_plot_qq(
-      data = opt_lvl_rows,
-      plot_title = plot_title,
-      file_name = file_name
-    )
-  }
-}
-
-kb_plot_qq <- function(data, plot_title="QQ-Plot", file_name="qq.png") {
-  png(file_name, 
-      units="px", 
-      width=KB_PLOT_WIDTH_12, 
-      height=KB_PLOT_HEIGHT_12)
-  par(mfrow=c(1,2))
+kb_get_plot_qq <- function(data, column, opt_level){
+  aes <- aes_string(
+    sample = column,
+    colour = "opt_level",
+    fill = "opt_level",
+    alpha = KB_PLOT_ALPHA_FILL_RATIO
+  )
   
-  qqnorm(data$load_time,
-       main=KB_LBL_TIME)
+  labs <- labs(
+    title = paste("Subjects in Optmization Level", opt_level, "and", kb_get_label(column)),
+    x = "Theoretical",
+    y = "Sample"
+  )
   
-  qqnorm(data$energy_consumed,
-         main=KB_LBL_ENERGY)
-
-  title(plot_title, line = -1.0, outer = TRUE)
-  dev.off()
-  par(mfrow=c(1,1))
+  theme <- modifyList(
+    kb_get_plot_base_theme(),
+    theme())
+  
+  ggplot(data, aes) + 
+    stat_qq() +
+    stat_qq_line() +
+    #scale_y_continuous(limits = kb_get_plot_base_scale_value(column))
+    labs +
+    theme +
+    scale_colour_manual(name = "opt_level",values = kb_get_plot_base_colors())
+    #scale_fill_manual(name = "opt_level",values = kb_get_plot_base_colors())
 }
