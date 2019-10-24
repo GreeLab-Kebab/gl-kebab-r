@@ -106,7 +106,9 @@ kb_get_plot_violin <- function(data, column, ymin = 0){
     violin +
     labs +
     theme +
-    expand_limits(y=ymin)
+    expand_limits(y=ymin) +
+    scale_colour_manual(name = "opt_level",values = kb_get_plot_base_colors()) +
+    scale_fill_manual(name = "opt_level",values = kb_get_plot_base_colors())
 }
 
 #
@@ -137,7 +139,9 @@ kb_get_plot_boxplot <- function(data, column, ymin=0){
     boxplot +
     labs +
     theme +
-    expand_limits(y=ymin)
+    expand_limits(y=ymin) +
+    scale_colour_manual(name = "opt_level",values = kb_get_plot_base_colors()) +
+    scale_fill_manual(name = "opt_level",values = kb_get_plot_base_colors())
 }
 
 #
@@ -218,9 +222,8 @@ kb_get_plot_qq <- function(data, column, opt_level){
   ggplot(data, aes) + 
     stat_qq() +
     stat_qq_line() +
-    #scale_y_continuous(limits = kb_get_plot_base_scale_value(column))
+    #scale_y_continuous(limits = kb_get_plot_base_scale_value(column)) +
     labs +
     theme +
     scale_colour_manual(name = "opt_level",values = kb_get_plot_base_colors())
-    #scale_fill_manual(name = "opt_level",values = kb_get_plot_base_colors())
 }
