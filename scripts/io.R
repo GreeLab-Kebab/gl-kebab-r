@@ -104,6 +104,7 @@ kb_write_txt_test_result <- function(test_result, file_name, title="") {
 #
 # ggplot IO
 #
-kb_write_ggplot <- function(plot, file_name = "plot.png", height = 5, aspect_ratio = 2.5) {
-  ggsave(file_name, plot = plot, height = 7 , width = 7 * aspect_ratio)
+kb_write_ggplot <- function(plot, file_name = "plot.png", height = KB_PLOT_HEIGHT, aspect_ratio = KB_PLOT_RATIO) {
+  plot
+  ggsave(file_name, plot = plot, height = height , width = height * aspect_ratio)
 }

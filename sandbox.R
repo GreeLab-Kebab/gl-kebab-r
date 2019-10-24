@@ -51,3 +51,7 @@ b1 =   aes_string(
   y="loadtime", 
 )
 c1 = modifyList(a1, b1)
+
+data$log_energy = log(data$energy_consumed)
+ggplot(data, aes(x=opt_level, y=log_energy)) + 
+  geom_violin(aes(fill = opt_level)) 
