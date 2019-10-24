@@ -30,10 +30,8 @@ for (opt_level in 0:3) {
 }
 kb_write_csv_test_summary_shapiro(normality_summary)
 
-shapiro.test(kb_get_subject_rows_by_opt_level(data, 0)$load_time)
-
 # 
-# Test Hypothesis - 4 treatment - Kruskal
+# Test Hypothesis - Not normal - 4 treatment - Kruskal
 #
 
 kruskal_summary <- kb_create_empty_kruskal_summary_dataframe()
@@ -54,6 +52,10 @@ for (column in columns) {
 }
 
 kb_write_csv_test_summary_kruskal(kruskal_summary)
+
+#
+# Test Hypothesis - Not normal - 2 treatment - Wilcox 
+#
 
 
 data_opt_0 = data[data$opt_level == 0,]

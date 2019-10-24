@@ -61,28 +61,7 @@ kb_create_empty_kruskal_summary_dataframe <- function() {
     c("column", "W",  "df", "p-value", "is_null_hypothesis_true"))
 }
 
-kb_test_hypothesis_kruskal_old <- function(data, column) {
-  
-  result_time <- kruskal.test(data$load_time, data$opt_level)
-  result_energy <- kruskal.test(data$energy_consumed, data$opt_level)
-  
-  result_kruskal[nrow(result_kruskal) + 1,] = kb_get_result_row_kruskal(result_time, "time")
-  result_kruskal[nrow(result_kruskal) + 1,] = kb_get_result_row_kruskal(result_energy, "energy")
-  
-  kb_write_txt_test_result(
-    test_result = result_time,
-    file_name = paste("test-kruskal-all-subject-time.txt", sep = ""))
-  kb_write_txt_test_result(
-    test_result = result_energy,
-    file_name = paste("test-kruskal-all-subject-energy.txt", sep = ""))
-  
-  print(result_kruskal)
-  kb_write_csv_test_summary_kruskal(result_kruskal)
-  
-  kb_write_txt_test_result(
-    test_result = summary(lm(data = data, load_time~opt_level)),
-    file_name = paste("test-kruskal-all-subject-lm-summary-time.txt", sep = ""))
-  kb_write_txt_test_result(
-    test_result = summary(lm(data = data, energy_consumed~opt_level)),
-    file_name = paste("test-kruskal-all-subject-lm-summary-energy.txt", sep = ""))
-}
+#
+# Wilcox
+#
+
