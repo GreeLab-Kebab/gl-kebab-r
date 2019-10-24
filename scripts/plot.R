@@ -21,24 +21,6 @@ kb_plot_boxplot_all_subjects <- function(data) {
   )
 }
 
-kb_plot_boxplot_per_subject <- function(data) {
-  subjects_ids <- kb_get_subjects_data()$id
-  
-  for (subject_id in subjects_ids){
-    subject_data <- kb_get_subject_by_id(subject_id)
-    subject_rows <- kb_get_subject_rows_by_id(data, subject_id)
-    
-    plot_title <- paste("Boxplot for", subject_data$url, "- ID", subject_data$id, "- Rank", subject_data$rank)
-    file_name <- paste(KB_FIGURE_PATH_BOXPLOT, "boxplot-id-", subject_data$id, ".png", sep="")
-    
-    kb_plot_boxplot(
-      data = subject_rows,
-      plot_title = plot_title,
-      file_name = file_name
-    )
-  }
-}
-
 kb_plot_boxplot <- function(data, plot_title="Boxplot", file_name="boxplot.png") { 
   png(file_name, 
       units="px", 
@@ -63,27 +45,6 @@ kb_plot_boxplot <- function(data, plot_title="Boxplot", file_name="boxplot.png")
 #
 # Histogram
 #
-
-kb_plot_histogram_per_subject <- function(data) {
-  subjects_ids <- kb_get_subjects_data()$id
-  for (subject_id in subjects_ids){
-    subject_data <- kb_get_subject_by_id(subject_id)
-    subject_rows <- kb_get_subject_rows_by_id(data, subject_id)
-    
-    for (opt_lvl in 0:3){
-      plot_title <- paste("Histogram for", subject_data$url, "- ID", subject_data$id, "- Rank", subject_data$rank, "- Optimization level", opt_lvl)
-      file_name <- paste(KB_FIGURE_PATH_HISTOGRAM, "histogram-id-", subject_data$id, "-opt-lvl", opt_lvl, ".png", sep="")
-      
-      subject_opt_lvl_rows <- kb_get_subject_rows_by_opt_level(subject_rows, opt_lvl)
-      
-      kb_plot_histogram(
-        data = subject_opt_lvl_rows,
-        plot_title = plot_title,
-        file_name = file_name
-      )
-    }
-  }
-}
 
 kb_plot_histogram_all_subject <- function(data) {
   for (opt_level in 0:3){
@@ -122,45 +83,6 @@ kb_plot_histogram <- function(data, plot_title="Histogram", file_name="hist.png"
 #
 # Scatter
 #
-
-kb_plot_scatter_per_subject <- function(data) {
-  subjects_ids <- kb_get_subjects_data()$id
-  for (subject_id in subjects_ids){
-    subject_data <- kb_get_subject_by_id(subject_id)
-    subject_rows <- kb_get_subject_rows_by_id(data, subject_id)
-    
-    plot_title <- paste("Scatter Plots for", subject_data$url, "- ID", subject_data$id, "- Rank", subject_data$rank)
-    file_name <- paste(KB_FIGURE_PATH_SCATTER, "scatter-id-", subject_data$id, ".png", sep="")
-      
-      
-    kb_plot_scatter(
-      data = subject_rows,
-      plot_title = plot_title,
-      file_name = file_name
-    )
-  }
-}
-
-kb_plot_scatter_per_subject2 <- function(data) {
-  subjects_ids <- kb_get_subjects_data()$id
-  for (subject_id in subjects_ids){
-    subject_data <- kb_get_subject_by_id(subject_id)
-    subject_rows <- kb_get_subject_rows_by_id(data, subject_id)
-    
-    for (opt_lvl in 0:3){
-      plot_title <- paste("Scatter Plots for", subject_data$url, "- ID", subject_data$id, "- Rank", subject_data$rank, "- Optimization level", opt_lvl)
-      file_name <- paste(KB_FIGURE_PATH_SCATTER, "scatter-id-", subject_data$id, "-opt-lvl", opt_lvl, ".png", sep="")
-      
-      subject_opt_lvl_rows <- kb_get_subject_rows_by_opt_level(subject_rows, opt_lvl)
-
-      kb_plot_scatter2(
-        data = subject_opt_lvl_rows,
-        plot_title = plot_title,
-        file_name = file_name
-      )
-    }
-  }
-}
 
 kb_plot_scatter_all_subject <- function(data) {
   plot_title <- paste("Scatter Plots all subjects")
