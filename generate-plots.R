@@ -15,7 +15,7 @@ source('scripts/plot.R')
 
 experiment_results  <- kb_read_csv_formated()
 experiment_results_energy_50_100 <- experiment_results[experiment_results$energy_consumed < 100,]
-kb_set_plot_base_colors(experiment_results)
+columns <- c("load_time", "energy_consumed")
 
 #
 # Violin
@@ -61,13 +61,21 @@ kb_write_ggplot(
 # Histogram
 # 
 
-kb_get_plot_histogram(
-  kb_get_subject_rows_by_opt_level(experiment_results, 1), 
-  "load_time")
+for (opt_lvl in 0:3) {
+  for (column in columns) {
+    plot <- kb_get_plot_histogram(
+      kb_get_subject_rows_by_opt_level(experiment_results, opt_lvl), 
+      column, 
+      opt_lvl)
+    
+    columnm_lbl <- ifelse(column == "load_time", "time", "energy")
+    
+    kb_write_ggplot(
+      plot = plot, 
+      file_name = paste(KB_FIGURE_PATH_HISTOGRAM, "histogram-", columnm_lbl, "-opt_level-", opt_lvl, ".png", sep=""))
+  }
+}
 
-kb_get_plot_histogram(
-  experiment_results, 
-  "load_time")
 
 # QQ-Plot
 kb_plot_qqplot_all_subjects(experiment_results)

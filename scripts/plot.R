@@ -39,11 +39,20 @@ kb_get_plot_base_aes <- function(){
   )
 }
 
-kb_get_plot_base_scale <- function(column) {
+kb_get_plot_base_scale_value <- function(column) {
   range <- 0
   ifelse(column == "load_time", 
-         range <- seq(0, 1250, 1250/5),
-         range <- seq(0, 250, 250/5))
+         range <- c(0, 1250),
+         range <- c(0, 250))
+  
+  range
+}
+
+kb_get_plot_base_scale_count <- function(column) {
+  range <- 0
+  ifelse(column == "load_time", 
+         range <- c(0, 30),
+         range <- c(0, 100))
   
   range
 }
@@ -51,9 +60,8 @@ kb_get_plot_base_scale <- function(column) {
 kb_get_plot_base_colors <- function() {
   myColors <- brewer.pal(4,"Set1")
   names(myColors) <- as.factor(c("0", "1", "2", "3"))
-  plotColorsScale <- scale_colour_manual(name = "opt_level",values = myColors)
   
-  plotColorsScale
+  myColors
 }
 
 #
@@ -136,41 +144,54 @@ kb_get_plot_boxplot <- function(data, column, ymin=0){
 # Histogram
 #
 
-kb_get_plot_histogram <- function(data, column){
+kb_get_plot_histogram <- function(data, column, opt_level){
   aes <- modifyList(
     kb_get_plot_base_aes(),
     aes_string(
-      x=column,
-      #fill = "opt_level"
+      x=column
     )
   )
   
-  labs <- modifyList(
-    kb_get_plot_base_labs(),
-    labs(
-      y = kb_get_label(column),
-      title = kb_get_plot_title_x_opt_level(column)
-    ))
+  labs <- labs(
+    title = paste("Subjects in Optmization Level", opt_level),
+    x = kb_get_label(column),
+    y = "Count"
+  )
   
   theme <- modifyList(
     kb_get_plot_base_theme(),
     theme())
   
   hist <- geom_histogram(
-    aes(
-      fill = factor(opt_level)
-    ),
-    bins = 30, # default level, set to avoid warning
+    bins = 60, # default level = 30
     alpha = KB_PLOT_ALPHA_FILL_RATIO
   )
   
   ggplot(data, aes) + 
     hist +
     labs +
-    #theme +
-    scale_x_continuous(breaks = kb_get_plot_base_scale(column)) +
-    kb_get_plot_base_colors()
+    theme +
+    scale_x_continuous(limits = kb_get_plot_base_scale_value(column)) +
+    scale_y_continuous(limits = kb_get_plot_base_scale_count(column)) +
+    scale_colour_manual(name = "opt_level",values = kb_get_plot_base_colors()) +
+    scale_fill_manual(name = "opt_level",values = kb_get_plot_base_colors())
 }
+# Currently, the histogram plot gives the folowwing warning
+#   Removed 2 rows containing missing values (geom_bar). 
+# This happens when `scale_x_continuous` is executed
+# scale_x_continuous sets the scale for 0-1250 in load time and 0-250 in energy consumed
+# However, the minimum and maximum values were checked both time and enery, and all values will fail within the proposed range. 
+# > min(experiment_results$load_time)
+#[1] 212
+#> min(experiment_results$energy_consumed)
+#[1] 52.0992
+#> max(experiment_results$load_time)
+#[1] 1205
+#> max(experiment_results$energy_consumed)
+#[1] 220.3783
+# 
+# Furthemore, even when setting the range for -1000 to 2000, the warning still shows.
+
 
 #
 # QQ plot
