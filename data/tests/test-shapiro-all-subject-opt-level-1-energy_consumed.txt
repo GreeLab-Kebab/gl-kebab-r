@@ -1,6 +1,6 @@
 
 	Shapiro-Wilk normality test
 
-data:  opt_level_rows$energy_consumed
+data:  opt_level_rows[, column]
 W = 0.50218, p-value < 2.2e-16
 

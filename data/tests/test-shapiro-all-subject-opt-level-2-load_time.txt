@@ -1,6 +1,6 @@
 
 	Shapiro-Wilk normality test
 
-data:  opt_level_rows$load_time
+data:  opt_level_rows[, column]
 W = 0.69604, p-value < 2.2e-16
 

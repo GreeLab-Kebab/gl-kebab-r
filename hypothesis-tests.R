@@ -9,7 +9,28 @@ source('scripts/test.R')
 
 data  <- kb_read_csv_formated()
 
-kb_test_data_normality_all(data)
+#
+# Test Normality
+#
+columns <- c("load_time", "energy_consumed")
+
+normality_summary <- kb_create_empty_normality_summary_dataframe()
+for (opt_level in 0:3) {
+  for (column in columns) {
+    result <- kb_test_data_normality(data, opt_level, column)
+    
+    normality_summary[nrow(normality_summary) + 1, ] <- kb_get_summary_row(result, opt_level, column)
+    
+    title <- paste("Optimization Level", opt_level, "-", KB_LBL_TIME)
+    file_name <- paste("test-shapiro-all-subject-opt-level-", opt_level, "-", column, ".txt", sep = "")
+    kb_print_test_result(result, title)
+    kb_write_txt_test_result(result, file_name, title)
+  }
+}
+kb_write_csv_test_summary_shapiro(normality_summary)
+
+shapiro.test(kb_get_subject_rows_by_opt_level(data, 0)$load_time)
+
 kb_test_hypothesis_kruskal(data)
 
 data_opt_0 = data[data$opt_level == 0,]
