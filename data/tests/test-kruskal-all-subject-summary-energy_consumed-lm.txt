@@ -5,18 +5,18 @@ lm(formula = data[, column] ~ data$opt_level)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--22.883  -4.583   1.041   3.697 141.005 
+-23.057  -5.279   1.348   3.765 140.074 
 
 Coefficients:
                 Estimate Std. Error t value Pr(>|t|)    
-(Intercept)     75.01020    0.82286  91.158  < 2e-16 ***
-data$opt_level1  4.36297    1.16369   3.749 0.000188 ***
-data$opt_level2 -0.02826    1.16369  -0.024 0.980630    
-data$opt_level3 -2.02555    1.16369  -1.741 0.082086 .  
+(Intercept)      74.4709     1.0938  68.086  < 2e-16 ***
+data$opt_level1   5.8336     1.5468   3.771 0.000178 ***
+data$opt_level2  -0.6161     1.5468  -0.398 0.690566    
+data$opt_level3  -1.2688     1.5468  -0.820 0.412361    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 12.48 on 916 degrees of freedom
-Multiple R-squared:  0.03396,	Adjusted R-squared:  0.0308 
-F-statistic: 10.74 on 3 and 916 DF,  p-value: 6.144e-07
+Residual standard error: 13.84 on 636 degrees of freedom
+Multiple R-squared:  0.04051,	Adjusted R-squared:  0.03598 
+F-statistic:  8.95 on 3 and 636 DF,  p-value: 8.175e-06
 

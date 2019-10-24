@@ -35,6 +35,10 @@ experiment_results <- kb_set_dataframe_column_types(data = experiment_results)
 # Print the count of occurances to find the missing rows
 #kb_print_count_per_subject_opt_level(data = experiment_results, failed_only = TRUE)
 
+# Remove failed subjects
+experiment_results_success_only <- kb_remove_subjects_in_which_tajs_failed(experiment_results)
+
 # Store dataframe as csv
-kb_write_csv_formated(data = experiment_results)
+kb_write_csv_formated(data = experiment_results_success_only)
+kb_write_csv_formated_all(data = experiment_results)
 kb_write_csv_raw(data = experiment_results_raw)

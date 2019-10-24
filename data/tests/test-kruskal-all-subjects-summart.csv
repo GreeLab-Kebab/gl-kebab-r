@@ -1,3 +1,3 @@
 "column","W","parameter df","p-value","is_null_hypothesis_true"
-"load_time","2.56763571431127","3","0.463191694831512","TRUE"
-"energy_consumed","27.0382718417966","3","5.77958494276883e-06","FALSE"
+"load_time","1.15785928518408","3","0.763128103619554","TRUE"
+"energy_consumed","11.7273947909074","3","0.00837779192188981","FALSE"

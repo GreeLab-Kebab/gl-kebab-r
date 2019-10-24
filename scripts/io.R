@@ -13,6 +13,11 @@ source('scripts/subject.R')
 # CSV IO
 #
 
+kb_write_csv_formated_all <- function(data) {
+  data_sorted <- data[order(data$subject_id, data$opt_level),]
+  kb_write_csv(data_sorted, KB_CSV_FILE_ALL_RESULTS_FORMATTED_ALL)
+}
+
 kb_write_csv_formated <- function(data){
   data_sorted <- data[order(data$subject_id, data$opt_level),]
   kb_write_csv(data_sorted, KB_CSV_FILE_ALL_RESULTS_FORMATTED)

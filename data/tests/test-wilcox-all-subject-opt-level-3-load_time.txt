@@ -3,6 +3,6 @@ Wilcox in  Load Time (ms)
 	Wilcoxon rank sum test with continuity correction
 
 data:  opt_level_0[, column] and opt_level_rows[, column]
-W = 26721, p-value = 0.8495
+W = 13009, p-value = 0.8011
 alternative hypothesis: true location shift is not equal to 0
 

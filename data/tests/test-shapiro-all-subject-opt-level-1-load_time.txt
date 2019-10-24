@@ -3,5 +3,5 @@ Optimization Level 1 - Load Time (ms)
 	Shapiro-Wilk normality test
 
 data:  opt_level_rows[, column]
-W = 0.74372, p-value < 2.2e-16
+W = 0.76308, p-value = 8.576e-15
 

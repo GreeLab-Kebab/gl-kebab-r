@@ -17,7 +17,8 @@ KB_PLOT_WIDTH_12 <- 640
 
 KB_CSV_PATH_OUTPUT <- "data/androidrunner/output"
 KB_CSV_FILE_AGGREGATED_RESULTS <- "\\Aggregated_Results_Batterystats.csv$"
-KB_CSV_FILE_ALL_RESULTS_FORMATTED <- "data/androidrunner/experiment_all_results.csv"
+KB_CSV_FILE_ALL_RESULTS_FORMATTED_ALL <- "data/androidrunner/experiment_all_results.csv"
+KB_CSV_FILE_ALL_RESULTS_FORMATTED <- "data/androidrunner/experiment_sucess_results.csv"
 KB_CSV_FILE_ALL_RESULTS_RAW <- "data/androidrunner/experiment_all_results_raw.csv"
 
 KB_CSV_FILE_TEST_SUMMARY_SHAPIRO <- "data/tests/test-shapiro-all-subjects-summart.csv"

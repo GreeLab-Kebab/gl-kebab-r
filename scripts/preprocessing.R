@@ -60,5 +60,16 @@ kb_merge_subject_data <- function(data) {
   data
 }
 
-
+kb_remove_subjects_in_which_tajs_failed <- function(data) {
+  failed_subjects <- c("forbescom", "dsalipaycom", "baiducom", "outlooklivecom", "okezonecom", "applecom", "linkedincom")
+  column_names <- names(data)
+  columns_length <- length(column_names)
+  
+  new_data <- data
+  for(subject in failed_subjects) {
+    new_data <- new_data[new_data$subject_url != subject]
+  }
+  
+  new_data
+}
 
