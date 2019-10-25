@@ -110,3 +110,24 @@ kb_write_ggplot <- function(plot, file_name = "plot.png", height = KB_PLOT_HEIGH
   plot
   ggsave(file_name, plot = plot, height = height , width = height * aspect_ratio)
 }
+
+#
+# Directories
+#
+kb_dir_create_plot <- function() {
+  showWarnings <- FALSE
+  dir.create(KB_FIGURE_PATH_BOXPLOT, showWarnings)
+  dir.create(KB_FIGURE_PATH_FREQ_POLY, showWarnings)
+  dir.create(KB_FIGURE_PATH_HISTOGRAM, showWarnings)
+  dir.create(KB_FIGURE_PATH_QQ, showWarnings)
+  dir.create(KB_FIGURE_PATH_VIOLIN, showWarnings)
+}
+
+kb_dir_remove_plot <- function() {
+  file.remove(dir(path = "plots/", recursive = TRUE, pattern = "\\.png$", full.names = TRUE))
+}
+
+kb_dir_reset_plot <- function() {
+  kb_dir_remove_plot()
+  kb_dir_create_plot()
+}

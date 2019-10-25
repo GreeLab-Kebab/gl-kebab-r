@@ -7,6 +7,7 @@ KB_FIGURE_PATH_BOXPLOT <- "plots/boxplots/"
 KB_FIGURE_PATH_HISTOGRAM <- "plots/histograms/"
 KB_FIGURE_PATH_QQ <- "plots/qq-plots/"
 KB_FIGURE_PATH_VIOLIN <- "plots/violin/"
+KB_FIGURE_PATH_FREQ_POLY <- "plots/freqpoly/"
 
 KB_LBL_OPT_LVL <- "Optimization Level"
 KB_LBL_TIME <- "Load Time (ms)"

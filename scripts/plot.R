@@ -1,6 +1,6 @@
 ##
 # Green lab 2019 - Team Kebab
-# This R script refers to the Plots operations
+# This R script generates plots using the ggplot library
 ##
 
 library(ggplot2)
@@ -12,7 +12,6 @@ source('scripts/subject.R')
 #
 # ggplot base config
 #
-
 
 kb_get_plot_base_theme <- function() {
   scale <- 1.5
@@ -28,8 +27,7 @@ kb_get_plot_base_theme <- function() {
 
 kb_get_plot_base_labs <- function() {
   labs(
-    colour = KB_LBL_OPT_LVL,
-    x = KB_LBL_OPT_LVL
+    colour = KB_LBL_OPT_LVL
   )
 }
 
@@ -65,9 +63,6 @@ kb_get_plot_base_colors <- function(n = 4) {
   hues <- seq(15, 375, length = n + 1)
   myColors <- hcl(h = hues, l = 65, c = 100)[1:n]
   
-  #myColors <- brewer.pal(4,"Set1")
-  #names(myColors) <- as.factor(c("0", "1", "2", "3"))
-  
   myColors
 }
 
@@ -97,6 +92,7 @@ kb_get_plot_violin <- function(data, column, ymin = 0){
   labs <- modifyList(
     kb_get_plot_base_labs(),
     labs(
+      x = KB_LBL_OPT_LVL,
       y = kb_get_label(column),
       title = kb_get_plot_title_x_opt_level(column)
     ))
@@ -113,9 +109,7 @@ kb_get_plot_violin <- function(data, column, ymin = 0){
     violin +
     labs +
     theme +
-    expand_limits(y=ymin) +
-    scale_colour_manual(name = "opt_level",values = kb_get_plot_base_colors()) +
-    scale_fill_manual(name = "opt_level",values = kb_get_plot_base_colors())
+    expand_limits(y=ymin)
 }
 
 #
@@ -132,6 +126,7 @@ kb_get_plot_boxplot <- function(data, column, ymin=0){
   labs <- modifyList(
     kb_get_plot_base_labs(),
     labs(
+      x = KB_LBL_OPT_LVL,
       y = kb_get_label(column),
       title = kb_get_plot_title_x_opt_level(column)
     ))
@@ -146,9 +141,7 @@ kb_get_plot_boxplot <- function(data, column, ymin=0){
     boxplot +
     labs +
     theme +
-    expand_limits(y=ymin) +
-    scale_colour_manual(name = "opt_level",values = kb_get_plot_base_colors()) +
-    scale_fill_manual(name = "opt_level",values = kb_get_plot_base_colors())
+    expand_limits(y=ymin)
 }
 
 #
@@ -156,6 +149,7 @@ kb_get_plot_boxplot <- function(data, column, ymin=0){
 #
 
 kb_get_plot_histogram <- function(data, column, opt_level){
+  .Deprecated("kb_get_plot_frequency_polygon")
   aes <- modifyList(
     kb_get_plot_base_aes(),
     aes_string(
@@ -163,10 +157,13 @@ kb_get_plot_histogram <- function(data, column, opt_level){
     )
   )
   
-  labs <- labs(
-    title = paste("Subjects in Optmization Level", opt_level),
-    x = kb_get_label(column),
-    y = "Count"
+  labs <- modifyList(
+    kb_get_plot_base_labs(),
+    labs(
+      title = paste("Subjects in Optmization Level", opt_level),
+      x = kb_get_label(column),
+      y = "Count"
+    )
   )
   
   theme <- modifyList(
@@ -211,17 +208,17 @@ kb_get_plot_histogram <- function(data, column, opt_level){
 kb_get_plot_qq <- function(data, column) {
   aes <- aes_string(
     sample = column,
-    colour = "opt_level",
-    #fill = "opt_level",
-    #alpha = KB_PLOT_ALPHA_FILL_RATIO
+    colour = "opt_level"
   )
   
-  labs <- labs(
-    title = paste(kb_get_label(column)),
-    x = "Theoretical",
-    y = "Sample",
-    legend = "Optimization Level"
-    #alpha = NA
+  labs <- modifyList(
+    kb_get_plot_base_labs(),
+    labs(
+      title = paste(kb_get_label(column)),
+      x = "Theoretical",
+      y = "Sample",
+      legend = "Optimization Level"
+    )
   )
   
   theme <- modifyList(
@@ -233,11 +230,8 @@ kb_get_plot_qq <- function(data, column) {
   ggplot(data, aes) + 
     stat_qq() +
     stat_qq_line() +
-    #scale_y_continuous(limits = kb_get_plot_base_scale_value(column)) +
     theme +
-    labs +
-    #scale_alpha_manual(guide = "none") +
-    scale_colour_manual(name = "Optimization Level",values = kb_get_plot_base_colors())
+    labs
 }
 
 kb_get_plot_qq_per_opt_level <- function(data, column, opt_level){
@@ -248,10 +242,13 @@ kb_get_plot_qq_per_opt_level <- function(data, column, opt_level){
     alpha = KB_PLOT_ALPHA_FILL_RATIO
   )
   
-  labs <- labs(
-    title = paste("Subjects in Optmization Level", opt_level, "and", kb_get_label(column)),
-    x = "Theoretical",
-    y = "Sample"
+  labs <- modifyList(
+    kb_get_plot_base_labs(),
+    labs(
+      title = paste("Subjects in Optmization Level", opt_level, "and", kb_get_label(column)),
+      x = "Theoretical",
+      y = "Sample"
+    )
   )
   
   theme <- modifyList(
@@ -261,8 +258,46 @@ kb_get_plot_qq_per_opt_level <- function(data, column, opt_level){
   ggplot(data, aes) + 
     stat_qq() +
     stat_qq_line() +
-    #scale_y_continuous(limits = kb_get_plot_base_scale_value(column)) +
     labs +
     theme +
     scale_colour_manual(name = "opt_level",values = kb_get_plot_base_colors())
+}
+
+#
+# Frequency Polygon
+#
+
+kb_get_plot_frequency_polygon <- function(data, column, ymin=0){
+  aes <- modifyList(
+    kb_get_plot_base_aes(),
+    aes_string(
+      x=column,
+      alpha = NULL
+    )
+  )
+  
+  labs <- modifyList(
+    kb_get_plot_base_labs(),
+    labs(
+      title = paste("Subject frequency per ", kb_get_label(column)),
+      x = kb_get_label(column),
+      y = "Count"
+    )
+  )
+  
+  theme <- modifyList(
+    kb_get_plot_base_theme(),
+    theme(
+      legend.position = "bottom"
+    ))
+  
+  freq_poly <- geom_freqpoly(
+    bins = 30,
+  )
+  
+  ggplot(data, aes) + 
+    freq_poly +
+    labs +
+    theme +
+    expand_limits(y=ymin)
 }
