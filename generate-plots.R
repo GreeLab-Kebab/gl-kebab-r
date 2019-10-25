@@ -37,7 +37,7 @@ kb_write_ggplot(
 
 kb_write_ggplot(
   plot = plot_violin_energy_0_100, 
-  file_name = paste(KB_FIGURE_PATH_VIOLIN, "violin-energy-0-100.png", sep=""))
+  file_name = paste(KB_FIGURE_PATH_VIOLIN, "violin-energy-50-100.png", sep=""))
 
 #
 # BoxPlots
@@ -57,26 +57,26 @@ kb_write_ggplot(
 
 kb_write_ggplot(
   plot = plot_box_energy_0_100, 
-  file_name = paste(KB_FIGURE_PATH_BOXPLOT, "boxplot-energy-0-100.png", sep=""))
+  file_name = paste(KB_FIGURE_PATH_BOXPLOT, "boxplot-energy-50-100.png", sep=""))
 
 #
 # Histogram
 # 
 
-for (opt_lvl in 0:3) {
-  for (column in columns) {
-    plot <- kb_get_plot_histogram(
-      kb_get_subject_rows_by_opt_level(experiment_results, opt_lvl), 
-      column, 
-      opt_lvl)
-    
-    columnm_lbl <- ifelse(column == "load_time", "time", "energy")
-    
-    kb_write_ggplot(
-      plot = plot, 
-      file_name = paste(KB_FIGURE_PATH_HISTOGRAM, "histogram-", columnm_lbl, "-opt_level-", opt_lvl, ".png", sep=""))
-  }
-}
+# for (opt_lvl in 0:3) {
+#   for (column in columns) {
+#     plot <- kb_get_plot_histogram(
+#       kb_get_subject_rows_by_opt_level(experiment_results, opt_lvl), 
+#       column, 
+#       opt_lvl)
+#     
+#     columnm_lbl <- ifelse(column == "load_time", "time", "energy")
+#     
+#     kb_write_ggplot(
+#       plot = plot, 
+#       file_name = paste(KB_FIGURE_PATH_HISTOGRAM, "histogram-", columnm_lbl, "-opt_level-", opt_lvl, ".png", sep=""))
+#   }
+# }
 
 #
 # Frequency Polygon
@@ -88,7 +88,7 @@ plot_freq_poly_energy_0_100 <- kb_get_plot_frequency_polygon(experiment_results_
 
 file_name_plot_freq_poly_time <- paste(KB_FIGURE_PATH_FREQ_POLY, "freqpoly-time.png", sep="")
 file_name_plot_freq_poly_energy <- paste(KB_FIGURE_PATH_FREQ_POLY, "freqpoly-energy.png", sep="")
-file_name_plot_freq_poly_energy_0_100 <- paste(KB_FIGURE_PATH_FREQ_POLY, "freqpoly-energy-0-100.png", sep="")
+file_name_plot_freq_poly_energy_0_100 <- paste(KB_FIGURE_PATH_FREQ_POLY, "freqpoly-energy-50-100.png", sep="")
 
 kb_write_ggplot(plot = plot_freq_poly_time, file_name = file_name_plot_freq_poly_time)
 kb_write_ggplot(plot = plot_freq_poly_energy, file_name = file_name_plot_freq_poly_energy)
