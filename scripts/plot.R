@@ -108,8 +108,8 @@ kb_get_plot_violin <- function(data, column, ymin = 0){
   ggplot(data, aes) + 
     violin +
     labs +
-    theme +
-    expand_limits(y=ymin)
+    theme #+
+    #expand_limits(y=ymin)
 }
 
 #
@@ -140,8 +140,8 @@ kb_get_plot_boxplot <- function(data, column, ymin=0){
   ggplot(data, aes) + 
     boxplot +
     labs +
-    theme +
-    expand_limits(y=ymin)
+    theme #+
+    #expand_limits(y=ymin)
 }
 
 #
@@ -160,7 +160,7 @@ kb_get_plot_histogram <- function(data, column, opt_level){
   labs <- modifyList(
     kb_get_plot_base_labs(),
     labs(
-      title = paste("Subjects in Optmization Level", opt_level),
+      title = paste(KB_LBL_OPT_LVL, opt_level),
       x = kb_get_label(column),
       y = "Count"
     )
@@ -236,16 +236,14 @@ kb_get_plot_qq <- function(data, column) {
 
 kb_get_plot_qq_per_opt_level <- function(data, column, opt_level){
   aes <- aes_string(
-    sample = column,
-    colour = "opt_level",
-    fill = "opt_level",
-    alpha = KB_PLOT_ALPHA_FILL_RATIO
+      sample = column,
+      colour = "opt_level",
+      fill = "opt_level"
   )
-  
   labs <- modifyList(
     kb_get_plot_base_labs(),
     labs(
-      title = paste("Subjects in Optmization Level", opt_level, "and", kb_get_label(column)),
+      title = paste(KB_LBL_OPT_LVL, opt_level, "and", kb_get_label(column)),
       x = "Theoretical",
       y = "Sample"
     )
@@ -260,7 +258,8 @@ kb_get_plot_qq_per_opt_level <- function(data, column, opt_level){
     stat_qq_line() +
     labs +
     theme +
-    scale_colour_manual(name = "opt_level",values = kb_get_plot_base_colors())
+    scale_colour_manual(values = c(kb_get_plot_base_colors()[opt_level+1]))# +
+    #scale_y_continuous(limits = kb_get_plot_base_scale_value(column))
 }
 
 #
@@ -287,9 +286,8 @@ kb_get_plot_frequency_polygon <- function(data, column, ymin=0){
   
   theme <- modifyList(
     kb_get_plot_base_theme(),
-    theme(
-      legend.position = "bottom"
-    ))
+    theme()
+  )
   
   freq_poly <- geom_freqpoly(
     bins = 30,
@@ -298,6 +296,6 @@ kb_get_plot_frequency_polygon <- function(data, column, ymin=0){
   ggplot(data, aes) + 
     freq_poly +
     labs +
-    theme +
-    expand_limits(y=ymin)
+    theme #+
+    #expand_limits(y=ymin)
 }

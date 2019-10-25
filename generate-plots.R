@@ -14,7 +14,7 @@ source('scripts/plot.R')
 #
 
 experiment_results  <- kb_read_csv_formated()
-experiment_results_energy_50_100 <- experiment_results[experiment_results$energy_consumed < 100,]
+experiment_results_energy_0_100 <- experiment_results[experiment_results$energy_consumed < 100,]
 columns <- c("load_time", "energy_consumed")
 
 kb_dir_reset_plot()
@@ -25,7 +25,7 @@ kb_dir_reset_plot()
 
 plot_violin_time <- kb_get_plot_violin(experiment_results, "load_time")
 plot_violin_energy <- kb_get_plot_violin(experiment_results, "energy_consumed")
-plot_violin_energy_50_100 <- kb_get_plot_violin(experiment_results_energy_50_100, "energy_consumed", ymin=50)
+plot_violin_energy_0_100 <- kb_get_plot_violin(experiment_results_energy_0_100, "energy_consumed", ymin=0)
 
 kb_write_ggplot(
   plot = plot_violin_time, 
@@ -36,8 +36,8 @@ kb_write_ggplot(
   file_name = paste(KB_FIGURE_PATH_VIOLIN, "violin-energy.png", sep=""))
 
 kb_write_ggplot(
-  plot = plot_violin_energy_50_100, 
-  file_name = paste(KB_FIGURE_PATH_VIOLIN, "violin-energy-50-100.png", sep=""))
+  plot = plot_violin_energy_0_100, 
+  file_name = paste(KB_FIGURE_PATH_VIOLIN, "violin-energy-0-100.png", sep=""))
 
 #
 # BoxPlots
@@ -45,7 +45,7 @@ kb_write_ggplot(
 
 plot_box_time <- kb_get_plot_boxplot(experiment_results, "load_time")
 plot_box_energy <- kb_get_plot_boxplot(experiment_results, "energy_consumed")
-plot_box_energy_50_100 <- kb_get_plot_boxplot(experiment_results_energy_50_100, "energy_consumed", ymin=50)
+plot_box_energy_0_100 <- kb_get_plot_boxplot(experiment_results_energy_0_100, "energy_consumed", ymin=0)
 
 kb_write_ggplot(
   plot = plot_box_time, 
@@ -56,8 +56,8 @@ kb_write_ggplot(
   file_name = paste(KB_FIGURE_PATH_BOXPLOT, "boxplot-energy.png", sep=""))
 
 kb_write_ggplot(
-  plot = plot_box_energy_50_100, 
-  file_name = paste(KB_FIGURE_PATH_BOXPLOT, "boxplot-energy-50-100.png", sep=""))
+  plot = plot_box_energy_0_100, 
+  file_name = paste(KB_FIGURE_PATH_BOXPLOT, "boxplot-energy-0-100.png", sep=""))
 
 #
 # Histogram
@@ -84,15 +84,15 @@ for (opt_lvl in 0:3) {
 
 plot_freq_poly_time <- kb_get_plot_frequency_polygon(experiment_results, "load_time")
 plot_freq_poly_energy <- kb_get_plot_frequency_polygon(experiment_results, "energy_consumed")
-plot_freq_poly_energy_50_100 <- kb_get_plot_frequency_polygon(experiment_results_energy_50_100, "energy_consumed")
+plot_freq_poly_energy_0_100 <- kb_get_plot_frequency_polygon(experiment_results_energy_0_100, "energy_consumed")
 
 file_name_plot_freq_poly_time <- paste(KB_FIGURE_PATH_FREQ_POLY, "freqpoly-time.png", sep="")
 file_name_plot_freq_poly_energy <- paste(KB_FIGURE_PATH_FREQ_POLY, "freqpoly-energy.png", sep="")
-file_name_plot_freq_poly_energy_50_100 <- paste(KB_FIGURE_PATH_FREQ_POLY, "freqpoly-energy-50-100.png", sep="")
+file_name_plot_freq_poly_energy_0_100 <- paste(KB_FIGURE_PATH_FREQ_POLY, "freqpoly-energy-0-100.png", sep="")
 
 kb_write_ggplot(plot = plot_freq_poly_time, file_name = file_name_plot_freq_poly_time)
 kb_write_ggplot(plot = plot_freq_poly_energy, file_name = file_name_plot_freq_poly_energy)
-kb_write_ggplot(plot = plot_freq_poly_energy_50_100, file_name = file_name_plot_freq_poly_energy_50_100)
+kb_write_ggplot(plot = plot_freq_poly_energy_0_100, file_name = file_name_plot_freq_poly_energy_0_100)
 
 #
 # QQ-Plot

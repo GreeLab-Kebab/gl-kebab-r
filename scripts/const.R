@@ -9,9 +9,9 @@ KB_FIGURE_PATH_QQ <- "plots/qq-plots/"
 KB_FIGURE_PATH_VIOLIN <- "plots/violin/"
 KB_FIGURE_PATH_FREQ_POLY <- "plots/freqpoly/"
 
-KB_LBL_OPT_LVL <- "Optimization Level"
-KB_LBL_TIME <- "Load Time (ms)"
-KB_LBL_ENERGY <- "Energy Consumption (J)"
+KB_LBL_OPT_LVL <- "Optimization level"
+KB_LBL_TIME <- "Load time (ms)"
+KB_LBL_ENERGY <- "Energy consumption (J)"
 
 KB_TITLE_PLOT_TIME_OPT_LEVEL <- paste(KB_LBL_TIME, "x", KB_LBL_OPT_LVL)
 KB_TITLE_PLOT_ENERGY_OPT_LEVEL <- paste(KB_LBL_ENERGY, "x", KB_LBL_OPT_LVL)
