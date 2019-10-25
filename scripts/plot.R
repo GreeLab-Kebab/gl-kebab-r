@@ -15,11 +15,14 @@ source('scripts/subject.R')
 
 
 kb_get_plot_base_theme <- function() {
+  scale <- 1.5
   theme(
     legend.position = "none", 
-    plot.title = element_text(hjust=0.5, size = rel(2)),
-    axis.text = element_text(size = rel(1.5)),
-    axis.title = element_text(size = rel(2))
+    legend.text = element_text(size = rel(scale * 0.75)),
+    legend.title = element_text(size = rel(scale * 0.75)),
+    plot.title = element_text(hjust=0.5, size = rel(scale)),
+    axis.text = element_text(size = rel(scale * 0.75)),
+    axis.title = element_text(size = rel(scale))
   )
 }
 
