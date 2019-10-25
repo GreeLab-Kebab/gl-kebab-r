@@ -79,9 +79,11 @@ for (opt_lvl in 0:3) {
 #
 # QQ-Plot
 #
+
+# One per opt_level
 for (opt_lvl in 0:3) {
   for (column in columns) {
-    plot <- kb_get_plot_qq(
+    plot <- kb_get_plot_qq_per_opt_level(
       kb_get_subject_rows_by_opt_level(experiment_results, opt_lvl), 
       column, 
       opt_lvl)
@@ -93,3 +95,13 @@ for (opt_lvl in 0:3) {
       file_name = paste(KB_FIGURE_PATH_QQ, "qqplot-", columnm_lbl, "-opt_level-", opt_lvl, ".png", sep=""))
   }
 }
+
+# All opt_level in one
+plot_qq_time <- kb_get_plot_qq(experiment_results, "load_time")
+plot_qq_energy <- kb_get_plot_qq(experiment_results, "energy_consumed")
+
+file_name_plot_qq_time <- paste(KB_FIGURE_PATH_QQ, "qqplot-time.png", sep="")
+file_name_plot_qq_energy <- paste(KB_FIGURE_PATH_QQ, "qqplot-energy.png", sep="")
+
+kb_write_ggplot(plot = plot_qq_time, file_name = file_name_plot_qq_time)
+kb_write_ggplot(plot = plot_qq_energy, file_name = file_name_plot_qq_energy)

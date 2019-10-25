@@ -64,6 +64,8 @@ kb_read_csv_formated <- function() {
     header = TRUE)
   
   data <- kb_set_dataframe_column_types(data)
+  
+  data
 }
 
 #

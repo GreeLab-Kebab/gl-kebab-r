@@ -17,9 +17,9 @@ source('scripts/subject.R')
 kb_get_plot_base_theme <- function() {
   theme(
     legend.position = "none", 
-    plot.title = element_text(hjust=0.5, size = rel(1.5)),
-    axis.text = element_text(size = rel(1)),
-    axis.title = element_text(size = rel(1.25))
+    plot.title = element_text(hjust=0.5, size = rel(2)),
+    axis.text = element_text(size = rel(1.5)),
+    axis.title = element_text(size = rel(2))
   )
 }
 
@@ -57,9 +57,13 @@ kb_get_plot_base_scale_count <- function(column) {
   range
 }
 
-kb_get_plot_base_colors <- function() {
-  myColors <- brewer.pal(4,"Set1")
-  names(myColors) <- as.factor(c("0", "1", "2", "3"))
+kb_get_plot_base_colors <- function(n = 4) {
+  # source https://stackoverflow.com/a/8197703/6934733
+  hues <- seq(15, 375, length = n + 1)
+  myColors <- hcl(h = hues, l = 65, c = 100)[1:n]
+  
+  #myColors <- brewer.pal(4,"Set1")
+  #names(myColors) <- as.factor(c("0", "1", "2", "3"))
   
   myColors
 }
@@ -201,7 +205,39 @@ kb_get_plot_histogram <- function(data, column, opt_level){
 # QQ plot
 #
 
-kb_get_plot_qq <- function(data, column, opt_level){
+kb_get_plot_qq <- function(data, column) {
+  aes <- aes_string(
+    sample = column,
+    colour = "opt_level",
+    #fill = "opt_level",
+    #alpha = KB_PLOT_ALPHA_FILL_RATIO
+  )
+  
+  labs <- labs(
+    title = paste(kb_get_label(column)),
+    x = "Theoretical",
+    y = "Sample",
+    legend = "Optimization Level"
+    #alpha = NA
+  )
+  
+  theme <- modifyList(
+    kb_get_plot_base_theme(),
+    theme(
+      legend.position = "bottom", 
+    ))
+  
+  ggplot(data, aes) + 
+    stat_qq() +
+    stat_qq_line() +
+    #scale_y_continuous(limits = kb_get_plot_base_scale_value(column)) +
+    theme +
+    labs +
+    #scale_alpha_manual(guide = "none") +
+    scale_colour_manual(name = "Optimization Level",values = kb_get_plot_base_colors())
+}
+
+kb_get_plot_qq_per_opt_level <- function(data, column, opt_level){
   aes <- aes_string(
     sample = column,
     colour = "opt_level",
