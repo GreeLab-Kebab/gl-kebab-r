@@ -40,7 +40,29 @@ kb_write_ggplot(
   file_name = paste(KB_FIGURE_PATH_VIOLIN, "violin-energy-50-100.png", sep=""))
 
 #
-# BoxPlots
+# BoxPlots per subject
+# 
+
+
+plot_box_time <- kb_get_plot_boxplot_per_subject(experiment_results, "load_time")
+plot_box_energy <- kb_get_plot_boxplot_per_subject(experiment_results, "energy_consumed")
+plot_box_energy_0_100 <- kb_get_plot_boxplot_per_subject(experiment_results_energy_0_100, "energy_consumed", ymin=0)
+
+kb_write_ggplot(
+  plot = plot_box_time, 
+  file_name = paste(KB_FIGURE_PATH_BOXPLOT, "boxplot-time-subject.png", sep=""))
+
+kb_write_ggplot(
+  plot = plot_box_energy, 
+  file_name = paste(KB_FIGURE_PATH_BOXPLOT, "boxplot-energy-subject.png", sep=""))
+
+kb_write_ggplot(
+  plot = plot_box_energy_0_100, 
+  file_name = paste(KB_FIGURE_PATH_BOXPLOT, "boxplot-energy-subject-50-100.png", sep=""))
+
+
+#
+# BoxPlots per treatment
 # 
 
 plot_box_time <- kb_get_plot_boxplot(experiment_results, "load_time")

@@ -85,10 +85,12 @@ kb_get_label <- function(column) {
 }
 
 kb_get_plot_title_x_treatment <- function(column) {
-  ifelse(column == "load_time", KB_TITLE_PLOT_TIME_OPT_LEVEL, KB_TITLE_PLOT_ENERGY_OPT_LEVEL)
+  ifelse(column == "load_time", KB_TITLE_PLOT_TIME_TREATMENT, KB_TITLE_PLOT_ENERGY_TREATMENT)
 }
 
-
+kb_get_plot_title_x_subject <- function(column) {
+  ifelse(column == "load_time", KB_TITLE_PLOT_TIME_SUBJECT, KB_TITLE_PLOT_ENERGY_SUBJECT)
+}
 
 #
 # Violin Plot
@@ -125,7 +127,7 @@ kb_get_plot_violin <- function(data, column, ymin = 0){
 }
 
 #
-# BoxPlots
+# kb_get_plot_base_colors_per_treatmentBoxPlots
 #
 
 kb_get_plot_boxplot <- function(data, column, ymin=0){
@@ -154,6 +156,36 @@ kb_get_plot_boxplot <- function(data, column, ymin=0){
     labs +
     theme #+
     #expand_limits(y=ymin)
+}
+
+kb_get_plot_boxplot_per_subject <- function(data, column, ymin=0){
+  aes <- aes_string(
+    y=column,
+    x="subject_id",
+    colour = "subject_id",
+    fill = "subject_id",
+    alpha = KB_PLOT_ALPHA_FILL_RATIO
+    )
+  
+  labs <- modifyList(
+    kb_get_plot_base_labs(),
+    labs(
+      x = KB_LBL_SUBJECT_ID,
+      y = kb_get_label(column),
+      title = kb_get_plot_title_x_subject(column)
+    ))
+  
+  theme <- modifyList(
+    kb_get_plot_base_theme(),
+    theme())
+  
+  boxplot <- geom_boxplot()
+  
+  ggplot(data, aes) + 
+    boxplot +
+    labs +
+    theme #+
+  #expand_limits(y=ymin)
 }
 
 #
