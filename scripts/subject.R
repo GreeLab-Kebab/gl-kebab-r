@@ -3,10 +3,12 @@
 # This R script refers to the data related to subjects
 ##
 
+# 7 subjects were dropped after the team discovered that TAJS analyser didn't worked in them, thus failing criteria of working on Lacuna
+#   failed_subjects <- c("forbescom", "dsalipaycom", "baiducom", "outlooklivecom", "okezonecom", "applecom", "linkedincom")
 kb_get_subjects_data <- function() {
   subjects_url <- c("myoutubecom", "amazoncom", "linkedincom", "baiducom", "wikipediaorg", "applecom", "outlooklivecom", "awsamazoncom", "officecom", "buzzfeedcom", "nlgodaddycom", "dsalipaycom", "mozillaorg", "okezonecom", "stackoverflowcom", "apacheorg", "theguardiancom", "stackexchangecom", "paypalcomp", "forbescom", "bookingcom", "bbccom", "amazonin")
   subject_ranks <- c(4, 7, 9, 11, 12, 14, 17, 38, 42, 43, 52, 53, 56, 62, 67, 80, 84, 87, 88, 102, 104, 109, 143)
-  subjects_ids <- seq(1,23)
+  subjects_ids <- c(1,2,3,3,3,4,4,4,5,6,7,8,8,9,9,10,11,12,13,14,14,15,16)
   
   subjects <- data.frame(
     "id" = subjects_ids,
