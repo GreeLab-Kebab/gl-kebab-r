@@ -24,6 +24,7 @@ experiment_results <- kb_keep_revevant_columns_only(
 # Clean subject URL and extract optimization level
 experiment_results <- kb_remove_text_from_subject_url(data = experiment_results)
 experiment_results <- kb_extract_opt_level(data = experiment_results)
+experiment_results <- kb_extract_treatment_id(data = experiment_results)
 experiment_results <- kb_remove_subject_url_duplication(data = experiment_results)
 
 # Obtain subject information

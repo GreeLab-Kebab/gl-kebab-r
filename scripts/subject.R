@@ -45,3 +45,12 @@ kb_get_subject_by_id <- function(subject_id) {
   
   subjects[subject_id,]
 }
+
+kb_get_treatment_id <- function(opt_level){
+  switch(opt_level, 
+         "0" = "JSoriginal", 
+         "1" = "JSopt1",
+         "2" = "JSopt2",
+         "3" = "JSopt3",
+         "NA")
+}

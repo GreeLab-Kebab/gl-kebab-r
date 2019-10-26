@@ -48,6 +48,15 @@ kb_extract_opt_level <- function(data) {
   data <- data[, -"url_len"]
 }
 
+kb_extract_treatment_id <- function(data) {
+  data$treatment <- ifelse(
+    data$opt_level == "0", "JSoriginal",
+    ifelse(data$opt_level == "1", "JSopt1",
+           ifelse(data$opt_level == "2", "JSopt2",
+                  ifelse(data$opt_level == "3", "JSopt3", "NA"))))
+  data
+}
+
 kb_merge_subject_data <- function(data) {
   subjects <- kb_get_subjects_data()
   idx_subject <- grep("subject", names(data))
