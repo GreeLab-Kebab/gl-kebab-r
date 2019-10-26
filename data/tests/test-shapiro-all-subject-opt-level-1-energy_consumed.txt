@@ -1,4 +1,4 @@
-Optimization Level 1 - Energy Consumption (J)
+Optimization Level 1 - Energy consumption (J)
 
 	Shapiro-Wilk normality test
 

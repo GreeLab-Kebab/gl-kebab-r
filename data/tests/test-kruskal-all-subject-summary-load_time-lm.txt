@@ -1,4 +1,4 @@
-Kruskal linear model summary in  Load Time (ms)
+Kruskal linear model summary in  Load time (ms)
 
 Call:
 lm(formula = data[, column] ~ data$opt_level)

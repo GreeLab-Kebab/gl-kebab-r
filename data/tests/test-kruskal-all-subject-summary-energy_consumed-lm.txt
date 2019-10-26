@@ -1,4 +1,4 @@
-Kruskal linear model summary in  Energy Consumption (J)
+Kruskal linear model summary in  Energy consumption (J)
 
 Call:
 lm(formula = data[, column] ~ data$opt_level)

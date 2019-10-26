@@ -1,4 +1,4 @@
-Kruskal in  Load Time (ms)
+Kruskal in  Load time (ms)
 
 	Kruskal-Wallis rank sum test
 

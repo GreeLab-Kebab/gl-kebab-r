@@ -1,4 +1,4 @@
-Wilcox in  Energy Consumption (J)
+Wilcox in  Energy consumption (J)
 
 	Wilcoxon rank sum test with continuity correction
 

@@ -1,4 +1,4 @@
-Kruskal in  Energy Consumption (J)
+Kruskal in  Energy consumption (J)
 
 	Kruskal-Wallis rank sum test
 

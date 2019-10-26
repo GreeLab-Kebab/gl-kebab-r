@@ -1,4 +1,4 @@
-Optimization Level 2 - Load Time (ms)
+Optimization Level 2 - Load time (ms)
 
 	Shapiro-Wilk normality test
 

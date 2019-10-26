@@ -1,4 +1,4 @@
-Wilcox in  Load Time (ms)
+Wilcox in  Load time (ms)
 
 	Wilcoxon rank sum test with continuity correction
 
