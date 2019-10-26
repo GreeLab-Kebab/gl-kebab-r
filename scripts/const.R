@@ -9,6 +9,7 @@ KB_FIGURE_PATH_QQ <- "plots/qq-plots/"
 KB_FIGURE_PATH_VIOLIN <- "plots/violin/"
 KB_FIGURE_PATH_FREQ_POLY <- "plots/freqpoly/"
 
+KB_LBL_JS_CODE<- "JavaScript code"
 KB_LBL_OPT_LVL <- "Optimization level"
 KB_LBL_TIME <- "Load time (ms)"
 KB_LBL_ENERGY <- "Energy consumption (J)"

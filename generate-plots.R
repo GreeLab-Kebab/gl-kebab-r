@@ -98,13 +98,15 @@ kb_write_ggplot(plot = plot_freq_poly_energy_0_100, file_name = file_name_plot_f
 # QQ-Plot
 #
 
+treatments <- c("JSoriginal", "JSopt1", "JSopt2", "JSopt3")
+
 # One per opt_level
 for (opt_lvl in 0:3) {
   for (column in columns) {
-    plot <- kb_get_plot_qq_per_opt_level(
+    plot <- kb_get_plot_qq_per_treatment(
       kb_get_subject_rows_by_opt_level(experiment_results, opt_lvl), 
       column, 
-      opt_lvl)
+      treatments[opt_lvl + 1])
     
     columnm_lbl <- ifelse(column == "load_time", "time", "energy")
     

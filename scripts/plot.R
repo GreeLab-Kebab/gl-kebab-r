@@ -27,15 +27,15 @@ kb_get_plot_base_theme <- function() {
 
 kb_get_plot_base_labs <- function() {
   labs(
-    colour = KB_LBL_OPT_LVL
+    colour = KB_LBL_JS_CODE
   )
 }
 
 kb_get_plot_base_aes <- function(){
   aes(
-    x=opt_level, 
-    colour = opt_level,
-    fill = opt_level,
+    x=treatment, 
+    colour = treatment,
+    fill = treatment,
     alpha = KB_PLOT_ALPHA_FILL_RATIO
   )
 }
@@ -66,6 +66,16 @@ kb_get_plot_base_colors <- function(n = 4) {
   myColors
 }
 
+kb_get_plot_base_colors_per_treatment <- function(treatment){
+  return <- switch(treatment, 
+                   "JSoriginal" = "#C77CFF", 
+                   "JSopt1" = "#F8766D",
+                   "JSopt2" = "#7CAE00",
+                   "JSopt3" = "#00BFC4",
+                   "#FFFFFF")
+  return
+}
+
 #
 # Misc
 #
@@ -74,9 +84,11 @@ kb_get_label <- function(column) {
   ifelse(column == "load_time", KB_LBL_TIME, KB_LBL_ENERGY)
 }
 
-kb_get_plot_title_x_opt_level <- function(column) {
+kb_get_plot_title_x_treatment <- function(column) {
   ifelse(column == "load_time", KB_TITLE_PLOT_TIME_OPT_LEVEL, KB_TITLE_PLOT_ENERGY_OPT_LEVEL)
 }
+
+
 
 #
 # Violin Plot
@@ -92,9 +104,9 @@ kb_get_plot_violin <- function(data, column, ymin = 0){
   labs <- modifyList(
     kb_get_plot_base_labs(),
     labs(
-      x = KB_LBL_OPT_LVL,
+      x = KB_LBL_JS_CODE,
       y = kb_get_label(column),
-      title = kb_get_plot_title_x_opt_level(column)
+      title = kb_get_plot_title_x_treatment(column)
     ))
   
   theme <- modifyList(
@@ -126,9 +138,9 @@ kb_get_plot_boxplot <- function(data, column, ymin=0){
   labs <- modifyList(
     kb_get_plot_base_labs(),
     labs(
-      x = KB_LBL_OPT_LVL,
+      x = KB_LBL_JS_CODE,
       y = kb_get_label(column),
-      title = kb_get_plot_title_x_opt_level(column)
+      title = kb_get_plot_title_x_treatment(column)
     ))
   
   theme <- modifyList(
@@ -148,7 +160,7 @@ kb_get_plot_boxplot <- function(data, column, ymin=0){
 # Histogram
 #
 
-kb_get_plot_histogram <- function(data, column, opt_level){
+kb_get_plot_histogram <- function(data, column, treatment){
   .Deprecated("kb_get_plot_frequency_polygon")
   aes <- modifyList(
     kb_get_plot_base_aes(),
@@ -160,7 +172,7 @@ kb_get_plot_histogram <- function(data, column, opt_level){
   labs <- modifyList(
     kb_get_plot_base_labs(),
     labs(
-      title = paste(KB_LBL_OPT_LVL, opt_level),
+      title = paste(KB_LBL_JS_CODE, treatment),
       x = kb_get_label(column),
       y = "Count"
     )
@@ -181,8 +193,8 @@ kb_get_plot_histogram <- function(data, column, opt_level){
     theme +
     scale_x_continuous(limits = kb_get_plot_base_scale_value(column)) +
     scale_y_continuous(limits = kb_get_plot_base_scale_count(column)) +
-    scale_colour_manual(name = "opt_level",values = kb_get_plot_base_colors()) +
-    scale_fill_manual(name = "opt_level",values = kb_get_plot_base_colors())
+    scale_colour_manual(name = "treatment",values = kb_get_plot_base_colors()) +
+    scale_fill_manual(name = "treatment",values = kb_get_plot_base_colors())
 }
 # Currently, the histogram plot gives the folowwing warning
 #   Removed 2 rows containing missing values (geom_bar). 
@@ -208,7 +220,7 @@ kb_get_plot_histogram <- function(data, column, opt_level){
 kb_get_plot_qq <- function(data, column) {
   aes <- aes_string(
     sample = column,
-    colour = "opt_level"
+    colour = "treatment"
   )
   
   labs <- modifyList(
@@ -234,16 +246,16 @@ kb_get_plot_qq <- function(data, column) {
     labs
 }
 
-kb_get_plot_qq_per_opt_level <- function(data, column, opt_level){
+kb_get_plot_qq_per_treatment <- function(data, column, treatment){
   aes <- aes_string(
       sample = column,
-      colour = "opt_level",
-      fill = "opt_level"
+      colour = "treatment",
+      fill = "treatment"
   )
   labs <- modifyList(
     kb_get_plot_base_labs(),
     labs(
-      title = paste(KB_LBL_OPT_LVL, opt_level, "and", kb_get_label(column)),
+      title = paste(KB_LBL_JS_CODE, treatment, "and", kb_get_label(column)),
       x = "Theoretical",
       y = "Sample"
     )
@@ -258,7 +270,7 @@ kb_get_plot_qq_per_opt_level <- function(data, column, opt_level){
     stat_qq_line() +
     labs +
     theme +
-    scale_colour_manual(values = c(kb_get_plot_base_colors()[opt_level+1]))# +
+    scale_colour_manual(values = c(kb_get_plot_base_colors_per_treatment(treatment)))# +
     #scale_y_continuous(limits = kb_get_plot_base_scale_value(column))
 }
 
@@ -286,7 +298,9 @@ kb_get_plot_frequency_polygon <- function(data, column, ymin=0){
   
   theme <- modifyList(
     kb_get_plot_base_theme(),
-    theme()
+    theme(
+      legend.position = "bottom"
+    )
   )
   
   freq_poly <- geom_freqpoly(

@@ -25,6 +25,7 @@ kb_set_dataframe_column_types <- function(data, isFormatted = TRUE) {
     data$subject_rank <- as.factor(data$subject_rank)
     data$subject_id <- as.factor(data$subject_id)
     data$opt_level <- as.factor(data$opt_level)
+    data$treatment <- as.factor(data$treatment)
   } else {
     data$subject <- as.factor(data$subject)
   }
@@ -47,10 +48,20 @@ kb_get_subject_by_id <- function(subject_id) {
 }
 
 kb_get_treatment_id <- function(opt_level){
-  switch(opt_level, 
-         "0" = "JSoriginal", 
-         "1" = "JSopt1",
-         "2" = "JSopt2",
-         "3" = "JSopt3",
+  switch(opt_level +1, 
+         "1" = "JSoriginal", 
+         "2" = "JSopt1",
+         "3" = "JSopt2",
+         "4" = "JSopt3",
          "NA")
+}
+
+kb_get_opt_level <- function(treatment){
+  return <- switch(treatment, 
+         "JSoriginal" = 0, 
+         "JSopt1" = 1,
+         "JSopt2" = 2,
+         "JSopt3" = 3,
+         "NA")
+  return
 }
