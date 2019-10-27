@@ -12,7 +12,12 @@ data  <- kb_read_csv_formated()
 #
 # Test Normality
 #
-columns <- c("load_time", "energy_consumed")
+data$load_time_sqrt <- sqrt(data$load_time)
+data$energy_consumed_sqrt <- sqrt(data$energy_consumed)
+data$load_time_log <- log(data$load_time)
+data$energy_consumed_log <- log(data$energy_consumed)
+
+columns <- c("load_time", "energy_consumed", "load_time_sqrt", "energy_consumed_sqrt", "load_time_log", "energy_consumed_log")
 
 normality_summary <- kb_create_empty_normality_summary_dataframe()
 for (opt_level in 0:3) {

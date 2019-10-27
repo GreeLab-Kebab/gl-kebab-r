@@ -182,3 +182,23 @@ kb_write_ggplot(plot = plot_qq_time_sqrt, file_name = file_name_plot_qq_time_sqr
 kb_write_ggplot(plot = plot_qq_energy_sqrt, file_name = file_name_plot_qq_energy_sqrt)
 kb_write_ggplot(plot = plot_qq_time_log, file_name = file_name_plot_qq_time_log)
 kb_write_ggplot(plot = plot_qq_energy_log, file_name = file_name_plot_qq_energy_log)
+
+
+#
+# Frequency Polygon Transformed data
+#
+
+plot_freq_poly_time_log <- kb_get_plot_frequency_polygon(experiment_results, "load_time_log")
+plot_freq_poly_time_sqrt <- kb_get_plot_frequency_polygon(experiment_results, "load_time_sqrt")
+plot_freq_poly_energy_log <- kb_get_plot_frequency_polygon(experiment_results, "energy_consumed_log")
+plot_freq_poly_energy_sqrt <- kb_get_plot_frequency_polygon(experiment_results, "energy_consumed_sqrt")
+
+file_name_plot_freq_poly_time_log <- paste(KB_FIGURE_PATH_FREQ_POLY, "freqpoly-time-log.png", sep="")
+file_name_plot_freq_poly_time_sqrt <- paste(KB_FIGURE_PATH_FREQ_POLY, "freqpoly-time-sqrt.png", sep="")
+file_name_plot_freq_poly_energy_log <- paste(KB_FIGURE_PATH_FREQ_POLY, "freqpoly-energy-log.png", sep="")
+file_name_plot_freq_poly_energy_sqrt <- paste(KB_FIGURE_PATH_FREQ_POLY, "freqpoly-energy-sqrt.png", sep="")
+
+kb_write_ggplot(plot = plot_freq_poly_time_log, file_name = file_name_plot_freq_poly_time_log)
+kb_write_ggplot(plot = plot_freq_poly_time_sqrt, file_name = file_name_plot_freq_poly_time_sqrt)
+kb_write_ggplot(plot = plot_freq_poly_energy_log, file_name = file_name_plot_freq_poly_energy_log)
+kb_write_ggplot(plot = plot_freq_poly_energy_sqrt, file_name = file_name_plot_freq_poly_energy_sqrt)
