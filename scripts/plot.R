@@ -345,3 +345,34 @@ kb_get_plot_frequency_polygon <- function(data, column, ymin=0){
     theme #+
     #expand_limits(y=ymin)
 }
+
+#
+# Scatter plots
+#
+kb_get_plot_scatter <- function(data, ymin=0){
+  aes <- aes(
+    y = energy_consumed,
+    x = load_time,
+    color=treatment
+  )
+  
+  labs <- labs(
+    y = KB_LBL_ENERGY,
+    x = KB_LBL_TIME,
+    title = KB_TITLE_PLOT_TIME_ENERGY
+  )
+  
+  theme <- modifyList(
+    kb_get_plot_base_theme(),
+    theme(
+      legend.position = "bottom",
+      plot.margin=unit(c(5.5, 20.5, 5.5, 5.5), "points")
+    ))
+  
+  scatter <- geom_point()
+  
+  ggplot(data, aes) + 
+    scatter +
+    labs +
+    theme
+}

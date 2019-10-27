@@ -147,3 +147,15 @@ file_name_plot_qq_energy <- paste(KB_FIGURE_PATH_QQ, "qqplot-energy.png", sep=""
 
 kb_write_ggplot(plot = plot_qq_time, file_name = file_name_plot_qq_time)
 kb_write_ggplot(plot = plot_qq_energy, file_name = file_name_plot_qq_energy)
+
+#
+# Scatter
+#
+plot_scatter <- kb_get_plot_scatter(experiment_results)
+plot_scatter_zoom <- kb_get_plot_scatter(experiment_results[experiment_results$energy_consumed < 100,])
+
+file_name_plot_scatter <- paste(KB_FIGURE_PATH_SCATTER, "scatter-energy-time.png", sep="")
+file_name_plot_scatter_zoom <- paste(KB_FIGURE_PATH_SCATTER, "scatter-energy-time-zoom.png", sep="")
+
+kb_write_ggplot(plot = plot_scatter, file_name = file_name_plot_scatter)
+kb_write_ggplot(plot = plot_scatter_zoom, file_name = file_name_plot_scatter_zoom)
