@@ -159,3 +159,26 @@ file_name_plot_scatter_zoom <- paste(KB_FIGURE_PATH_SCATTER, "scatter-energy-tim
 
 kb_write_ggplot(plot = plot_scatter, file_name = file_name_plot_scatter)
 kb_write_ggplot(plot = plot_scatter_zoom, file_name = file_name_plot_scatter_zoom)
+
+#
+# Normallity check on transformed data
+#
+experiment_results$load_time_sqrt <- sqrt(experiment_results$load_time)
+experiment_results$energy_consumed_sqrt <- sqrt(experiment_results$energy_consumed)
+experiment_results$load_time_log <- log(experiment_results$load_time)
+experiment_results$energy_consumed_log <- log(experiment_results$energy_consumed)
+
+plot_qq_time_sqrt <- kb_get_plot_qq(experiment_results, "load_time_sqrt")
+plot_qq_energy_sqrt <- kb_get_plot_qq(experiment_results, "energy_consumed_sqrt")
+plot_qq_time_log <- kb_get_plot_qq(experiment_results, "load_time_log")
+plot_qq_energy_log <- kb_get_plot_qq(experiment_results, "energy_consumed_log")
+
+file_name_plot_qq_time_sqrt <- paste(KB_FIGURE_PATH_QQ, "qqplot-time-sqrt.png", sep="")
+file_name_plot_qq_energy_sqrt <- paste(KB_FIGURE_PATH_QQ, "qqplot-energy-sqrt.png", sep="")
+file_name_plot_qq_time_log <- paste(KB_FIGURE_PATH_QQ, "qqplot-time-log.png", sep="")
+file_name_plot_qq_energy_log <- paste(KB_FIGURE_PATH_QQ, "qqplot-energy-log.png", sep="")
+
+kb_write_ggplot(plot = plot_qq_time_sqrt, file_name = file_name_plot_qq_time_sqrt)
+kb_write_ggplot(plot = plot_qq_energy_sqrt, file_name = file_name_plot_qq_energy_sqrt)
+kb_write_ggplot(plot = plot_qq_time_log, file_name = file_name_plot_qq_time_log)
+kb_write_ggplot(plot = plot_qq_energy_log, file_name = file_name_plot_qq_energy_log)

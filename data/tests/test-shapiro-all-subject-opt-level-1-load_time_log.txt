@@ -1,0 +1,7 @@
+Optimization Level 1 - Energy consumption (J)
+
+	Shapiro-Wilk normality test
+
+data:  opt_level_rows[, column]
+W = 0.91606, p-value = 5.483e-08
+
